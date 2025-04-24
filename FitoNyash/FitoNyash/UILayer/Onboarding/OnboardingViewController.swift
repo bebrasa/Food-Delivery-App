@@ -108,7 +108,7 @@ extension OnboardingViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
             pageControl.currentPage = currentPageIndex
-            let page = pages[currentPageIndex]
+            _ = pages[currentPageIndex]
         }
     }
 }

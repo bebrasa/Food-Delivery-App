@@ -12,12 +12,15 @@ class AppCoordinator: Coordinator{
     private let userStorage = UserStorage.shared
     
     override func start() {
-        showOnboardingFlow()
+//        showOnboardingFlow()
 //        if userStorage.passedOnboarding {
 //            showMainFlow()
 //        } else {
 //            showOnboardingFlow()
 //        }
+        let loginVC = LoginViewController()
+        navigationController?.pushViewController(loginVC, animated: false)
+        
     }
     
     override func finish() {
