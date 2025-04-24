@@ -15,6 +15,7 @@ class OnboardingCoordinator: Coordinator {
     
     override func finish() {
         print("AppCoordinator finished")
+        finishDelegate?.coordinatorDidFinish(childCoordinator: self)
     }
     
 }
@@ -42,6 +43,7 @@ private extension OnboardingCoordinator {
         fouthVC.imageToShow = UIImage(resource: .fouthOnboard)
         fouthVC.titleText = "В пару кликов"
         fouthVC.descriptionText = "Добавь любимое в корзину и оформи\n за пару секунд"
+        fouthVC.showExitButton = true
         
         pages.append(firstVC)
         pages.append(secondVC)
@@ -51,5 +53,11 @@ private extension OnboardingCoordinator {
         let presenter = OnboardingViewPresenter(coordinator: self)
         let viewController = OnboardingViewController(pages: pages, viewOutput: presenter)
         navigationController?.pushViewController(viewController, animated: true)
+        
+        if let lastPage = pages.last as? OnboardingPartViewController {
+            lastPage.onExitTapped = { [weak viewController] in
+                viewController?.buttonPressed()
+            }
+        }
     }
 }
