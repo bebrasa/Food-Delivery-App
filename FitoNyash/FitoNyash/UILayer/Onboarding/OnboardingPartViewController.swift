@@ -51,7 +51,6 @@ class OnboardingPartViewController: UIViewController {
     var onExitTapped: (() -> Void)?
 
     @objc private func exitButtonTapped() {
-        print("👆 Exit button tapped")
         onExitTapped?()
     }
 
