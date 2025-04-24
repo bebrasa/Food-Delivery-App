@@ -73,4 +73,10 @@ class FNButton: UIView {
             button.backgroundColor = AppColors.buttonBlack
         }
     }
+    public func setTitle(_ title: String?) {
+        button.setTitle(title, for: .normal)
+    }
+    public func setTitleColor(_ color: UIColor?) {
+        button.setTitleColor(color, for: .normal)
+    }
 }
