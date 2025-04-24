@@ -22,7 +22,7 @@ class OnboardingViewController: UIViewController {
         return control
     }()
         
-    weak var viewOutput: OnboardingViewOutput!
+    var viewOutput: OnboardingViewOutput!
         
     init(pages: [UIViewController] = [UIViewController](), viewOutput: OnboardingViewOutput!) {
         self.pages = pages
@@ -43,11 +43,19 @@ class OnboardingViewController: UIViewController {
 
 }
 
+// MARK: - Action
+extension OnboardingViewController {
+    @objc func buttonPressed() {
+        viewOutput.onboardingFinish()
+    }
+}
+
 // MARK: - Layout
 private extension OnboardingViewController {
     func setupPageViewController() {
         pageViewController.delegate = self
         pageViewController.dataSource = self
+        pageViewController.view.backgroundColor = AppColors.backgroundWhite
         
         pageViewController.setViewControllers([pages.first!], direction: .forward, animated: true)
         
@@ -60,6 +68,7 @@ private extension OnboardingViewController {
         view.addSubview(pageControl)
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
+        pageControl.isUserInteractionEnabled = false
         
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         
