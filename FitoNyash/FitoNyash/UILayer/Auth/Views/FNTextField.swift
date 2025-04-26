@@ -20,9 +20,16 @@ class FNTextField: UITextField {
     
     func setupLayout() {
         self.layer.cornerRadius = 24
-        self.backgroundColor = AppColors.backgroundWhite
+        self.backgroundColor = AppColors.placeholderGrey
         self.font = UIFont.Roboto.regular.size(of: 14)
-        self.placeholder = "Text to input"
+        
+        let placeholderText = "Text to input"
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black.withAlphaComponent(0.5),
+            .font: UIFont.Roboto.regular.size(of: 14)
+        ]
+        self.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
+        
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: self.frame.height))
         self.leftView = paddingView
         self.rightView = paddingView
