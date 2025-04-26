@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     private var state: LoginViewState = .base
-    weak var viewOutput: LoginViewOutput!
+    var viewOutput: LoginViewOutput!
     
     // MARK: - Views
     private lazy var titleLable = UILabel()
@@ -155,6 +155,7 @@ private extension LoginViewController {
         signInButton.translatesAutoresizingMaskIntoConstraints = false
 
         signInButton.layer.cornerRadius = 24
+        signInButton.action = onSignInTapped
         
         switch state {
         case .base:
@@ -258,6 +259,7 @@ private extension LoginViewController {
         signUpButton.setTitleColor(AppColors.labelBlack)
         signUpButton.backgroundColor = AppColors.backgroundWhite
         signUpButton.layer.cornerRadius = 24
+        signUpButton.action = onSignUpTapped
         
         
         NSLayoutConstraint.activate([
@@ -272,11 +274,25 @@ private extension LoginViewController {
 
 extension LoginViewController: LoginViewInput {
     func onSignInTapped() {
-    
+        switch state {
+        case .base:
+            viewOutput.goToSignIn()
+        case .login:
+            return
+        case .sighUp:
+            return
+        }
     }
     
     func onSignUpTapped() {
-        
+        switch state {
+        case .base:
+            viewOutput.goToSignUp()
+        case .login:
+            return
+        case .sighUp:
+            return
+        }
     }
     
     func onForgotTapped() {

@@ -29,7 +29,7 @@ class LoginPresenter {
 
 extension LoginPresenter: LoginViewOutput {
     func goToSignUp() {
-        
+        coordinator?.showSignUpFlow()
     }
     
     func goToForgotPassword() {
@@ -49,6 +49,7 @@ extension LoginPresenter: LoginViewOutput {
     }
      
     func goToSignIn() {
+        coordinator?.showSignInFlow()
     }
 }
 
