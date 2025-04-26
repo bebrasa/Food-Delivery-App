@@ -115,7 +115,7 @@ struct SceneFactory {
     
     static func makeSignUpScene(coordinator: AppCoordinator) -> LoginViewController {
         let presenter = LoginPresenter(coordinator: coordinator)
-        let viewController = LoginViewController(viewOutput: presenter, state: .sighUp)
+        let viewController = LoginViewController(viewOutput: presenter, state: .signUp)
         
         return viewController
     }

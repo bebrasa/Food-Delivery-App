@@ -10,7 +10,7 @@ import UIKit
 enum LoginViewState {
     case base
     case login
-    case sighUp
+    case signUp
 }
 
 protocol LoginViewInput: AnyObject {
@@ -72,7 +72,7 @@ private extension LoginViewController {
             setupTitleLabel()
             setupSignInButton()
             setupforgotPasswordLabel()
-        case .sighUp:
+        case .signUp:
             view.backgroundColor = .white
             setupSignUpPassword()
             setupSignUpReEnterPassword()
@@ -121,7 +121,7 @@ private extension LoginViewController {
                 titleLable.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -30),
                 titleLable.heightAnchor.constraint(equalToConstant: 50)
             ])
-        case .sighUp:
+        case .signUp:
             titleLable.text = "Новенький здесь?"
             NSLayoutConstraint.activate([
                 titleLable.bottomAnchor.constraint(equalTo: signUpUsername.topAnchor, constant: -26),
@@ -180,7 +180,7 @@ private extension LoginViewController {
                 signInButton.heightAnchor.constraint(equalToConstant: 50),
                 signInButton.widthAnchor.constraint(equalToConstant: 354)
             ])
-        case .sighUp:
+        case .signUp:
             signInButton.setTitle("Присоединиться")
             signInButton.backgroundColor = AppColors.accentGreen
             
@@ -279,7 +279,7 @@ extension LoginViewController: LoginViewInput {
             viewOutput.goToSignIn()
         case .login:
             return
-        case .sighUp:
+        case .signUp:
             return
         }
     }
@@ -290,7 +290,7 @@ extension LoginViewController: LoginViewInput {
             viewOutput.goToSignUp()
         case .login:
             return
-        case .sighUp:
+        case .signUp:
             return
         }
     }
