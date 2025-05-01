@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
     // MARK: - Properties
     private var state: LoginViewState = .base
     var viewOutput: LoginViewOutput!
+    private var originalY: CGFloat = 0
     
     // MARK: - Views
     private lazy var titleLable = UILabel()
@@ -54,8 +55,13 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = AppColors.accentGreen
         setupLayout()
+        setupObservers()
+        originalY = self.view.frame.origin.y
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 private extension LoginViewController {
@@ -305,6 +311,40 @@ extension LoginViewController: LoginViewInput {
     
 }
 
+//MARK: - Keyboard
+private extension LoginViewController {
+    func setupObservers() {
+        startKeyboardListening()
+        setupTapToHideKeyboard()
+    }
+    private func startKeyboardListening() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    private func setupTapToHideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    @objc private func keyboardWillShow(notification: Notification){
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let keyboardHeight = keyboardFrame.height
+        if self.view.frame.origin.y == originalY {
+            self.view.frame.origin.y -= keyboardHeight / 2
+        }
+    }
+    @objc private func keyboardWillHide(notification: Notification) {
+        self.view.frame.origin.y = originalY
+    }
+}
+
 //#Preview("LoginVC") {
-//    LoginViewController(viewOutput: LoginPresenter(), state: .sighUp)
+//    let presenter = LoginPresenter()
+//    let viewController = LoginViewController(viewOutput: presenter, state: .login)
+//    presenter.viewInput = viewController
+//    return viewController
 //}
