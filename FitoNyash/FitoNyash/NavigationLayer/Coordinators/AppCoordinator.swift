@@ -13,7 +13,7 @@ class AppCoordinator: Coordinator{
     private let factory = SceneFactory.self
     
     override func start() {
-        //UserStorage.shared.passedOnboarding = false
+//        UserStorage.shared.passedOnboarding = false
 //        if userStorage.passedOnboarding {
 //            showAuthFlow()
 //        } else {
@@ -38,7 +38,11 @@ private extension AppCoordinator {
     func showMainFlow() {
         guard let navigationController = navigationController else { return }
         let tabBarController = factory.makeMainFlow(coordinator: self, finishDelegate: self)
-        navigationController.pushViewController(tabBarController, animated: true)
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = .fade
+        self.window?.layer.add(transition, forKey: kCATransition)
+        self.window?.rootViewController = tabBarController
     }
     func showAuthFlow() {
         guard let navigationController = navigationController else { return }
