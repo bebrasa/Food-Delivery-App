@@ -77,6 +77,30 @@ private extension AppCoordinator {
         
         navigationController.pushViewController(tabBarController, animated: true)
     }
+<<<<<<< Updated upstream
+=======
+    func showAuthFlow() {
+        guard let navigationController = navigationController else { return }
+        let viewController = factory.makeAuthScene(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+extension AppCoordinator {
+    func showSignInFlow() {
+        guard let navigationController = navigationController else { return }
+        let viewController = factory.makeSignInScene(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    func showSignUpFlow() {
+        guard let navigationController = navigationController else { return }
+        let viewController = factory.makeSignUpScene(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    func showMainScreen() {
+        showMainFlow()
+    }
+>>>>>>> Stashed changes
 }
 
 extension AppCoordinator: CoordinatorFinishDelegate {

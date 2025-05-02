@@ -14,10 +14,8 @@ enum LoginViewState {
 }
 
 protocol LoginViewInput: AnyObject {
-    func onSignInTapped()
-    func onSignUpTapped()
-    func onForgotTapped()
-    func onBackPressed()
+    func startLoader()
+    func stopLoader()
 }
 
 class LoginViewController: UIViewController {
@@ -37,6 +35,8 @@ class LoginViewController: UIViewController {
     private lazy var logoImage = UIImageView()
     private lazy var signInButton = FNButton()
     private lazy var signUpButton = FNButton()
+    private lazy var loader = UIActivityIndicatorView(style: .large)
+    private lazy var loaderContainer = UIView()
 
     // MARK: - Inits
     init(viewOutput: LoginViewOutput, state: LoginViewState) {
@@ -80,7 +80,19 @@ private extension LoginViewController {
             setupSignInButton()
             setupTitleLabel()
         }
+        setupLoaderView()
     }
+<<<<<<< Updated upstream
+=======
+    
+    //MARK: - Layout
+    func setupNavigationBar(){
+        let backImage = UIImage(resource: .back)
+        let backButton = UIBarButtonItem(image: backImage, style: .plain, target: navigationController, action: #selector(navigationController?.popViewController(animated:)))
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.leftBarButtonItem?.tintColor = AppColors.labelBlack
+    }
+>>>>>>> Stashed changes
     func setupSignInPassword() {
         view.addSubview(signInPassword)
         signInPassword.translatesAutoresizingMaskIntoConstraints = false
@@ -270,16 +282,41 @@ private extension LoginViewController {
             signUpButton.widthAnchor.constraint(equalToConstant: 354)
         ])
     }
+    func setupLoaderView() {
+        view.addSubview(loaderContainer)
+        loaderContainer.translatesAutoresizingMaskIntoConstraints = false
+        loaderContainer.backgroundColor = AppColors.labelBlack.withAlphaComponent(0.2)
+        loaderContainer.isHidden = true
+        
+        NSLayoutConstraint.activate([
+            loaderContainer.widthAnchor.constraint(equalTo: view.widthAnchor),
+            loaderContainer.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
+        
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        loaderContainer.addSubview(loader)
+        
+        NSLayoutConstraint.activate([
+            loader.centerXAnchor.constraint(equalTo: loaderContainer.centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: loaderContainer.centerYAnchor)
+        ])
+    }
 }
-
-extension LoginViewController: LoginViewInput {
+//MARK: - Private methods
+private extension LoginViewController {
     func onSignInTapped() {
         switch state {
         case .base:
             viewOutput.goToSignIn()
         case .login:
+<<<<<<< Updated upstream
             return
         case .sighUp:
+=======
+            print(#function)
+            viewOutput.loginStart(login: signInUsername.text ?? "", password: signInPassword.text ?? "")
+        case .signUp:
+>>>>>>> Stashed changes
             return
         }
     }
@@ -302,7 +339,18 @@ extension LoginViewController: LoginViewInput {
     func onBackPressed() {
         
     }
+}
+
+extension LoginViewController: LoginViewInput {
+    func startLoader() {
+        loaderContainer.isHidden = false
+        loader.startAnimating()
+    }
     
+    func stopLoader() {
+        loaderContainer.isHidden = true
+        loader.stopAnimating()
+    }
 }
 
 //#Preview("LoginVC") {
