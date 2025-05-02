@@ -57,6 +57,9 @@ extension AppCoordinator {
         let viewController = factory.makeSignUpScene(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
+    func showMainScreen() {
+        showMainFlow()
+    }
 }
 
 extension AppCoordinator: CoordinatorFinishDelegate {
