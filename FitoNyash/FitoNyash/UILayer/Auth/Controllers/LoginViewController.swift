@@ -10,7 +10,7 @@ import UIKit
 enum LoginViewState {
     case base
     case login
-    case sighUp
+    case signUp
 }
 
 protocol LoginViewInput: AnyObject {
@@ -23,6 +23,7 @@ class LoginViewController: UIViewController {
     // MARK: - Properties
     private var state: LoginViewState = .base
     var viewOutput: LoginViewOutput!
+    private var originalY: CGFloat = 0
     
     // MARK: - Views
     private lazy var titleLable = UILabel()
@@ -54,8 +55,13 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = AppColors.accentGreen
         setupLayout()
+        setupObservers()
+        originalY = self.view.frame.origin.y
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 private extension LoginViewController {
@@ -72,19 +78,18 @@ private extension LoginViewController {
             setupTitleLabel()
             setupSignInButton()
             setupforgotPasswordLabel()
-        case .sighUp:
+            setupNavigationBar()
+        case .signUp:
             view.backgroundColor = .white
             setupSignUpPassword()
             setupSignUpReEnterPassword()
             setupSignUpUsername()
             setupSignInButton()
             setupTitleLabel()
+            setupNavigationBar()
         }
         setupLoaderView()
     }
-<<<<<<< Updated upstream
-=======
-    
     //MARK: - Layout
     func setupNavigationBar(){
         let backImage = UIImage(resource: .back)
@@ -92,7 +97,6 @@ private extension LoginViewController {
         navigationItem.leftBarButtonItem = backButton
         navigationItem.leftBarButtonItem?.tintColor = AppColors.labelBlack
     }
->>>>>>> Stashed changes
     func setupSignInPassword() {
         view.addSubview(signInPassword)
         signInPassword.translatesAutoresizingMaskIntoConstraints = false
@@ -133,7 +137,7 @@ private extension LoginViewController {
                 titleLable.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -30),
                 titleLable.heightAnchor.constraint(equalToConstant: 50)
             ])
-        case .sighUp:
+        case .signUp:
             titleLable.text = "Новенький здесь?"
             NSLayoutConstraint.activate([
                 titleLable.bottomAnchor.constraint(equalTo: signUpUsername.topAnchor, constant: -26),
@@ -157,7 +161,7 @@ private extension LoginViewController {
             logoImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 227),
             logoImage.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 115),
             logoImage.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -115),
-            logoImage.heightAnchor.constraint(equalToConstant: 163),
+            logoImage.heightAnchor.constraint(equalToConstant: 158),
             logoImage.widthAnchor.constraint(equalToConstant: 158)
         ])
     }
@@ -192,7 +196,7 @@ private extension LoginViewController {
                 signInButton.heightAnchor.constraint(equalToConstant: 50),
                 signInButton.widthAnchor.constraint(equalToConstant: 354)
             ])
-        case .sighUp:
+        case .signUp:
             signInButton.setTitle("Присоединиться")
             signInButton.backgroundColor = AppColors.accentGreen
             
@@ -309,14 +313,9 @@ private extension LoginViewController {
         case .base:
             viewOutput.goToSignIn()
         case .login:
-<<<<<<< Updated upstream
-            return
-        case .sighUp:
-=======
             print(#function)
             viewOutput.loginStart(login: signInUsername.text ?? "", password: signInPassword.text ?? "")
-        case .signUp:
->>>>>>> Stashed changes
+        case .sighUp:
             return
         }
     }
@@ -327,7 +326,7 @@ private extension LoginViewController {
             viewOutput.goToSignUp()
         case .login:
             return
-        case .sighUp:
+        case .signUp:
             return
         }
     }
@@ -353,6 +352,33 @@ extension LoginViewController: LoginViewInput {
     }
 }
 
-//#Preview("LoginVC") {
-//    LoginViewController(viewOutput: LoginPresenter(), state: .sighUp)
-//}
+//MARK: - Keyboard
+private extension LoginViewController {
+    func setupObservers() {
+        startKeyboardListening()
+        setupTapToHideKeyboard()
+    }
+    private func startKeyboardListening() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    private func setupTapToHideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    @objc private func keyboardWillShow(notification: Notification){
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let keyboardHeight = keyboardFrame.height
+        if self.view.frame.origin.y == originalY {
+            self.view.frame.origin.y -= keyboardHeight / 2
+        }
+    }
+    @objc private func keyboardWillHide(notification: Notification) {
+        self.view.frame.origin.y = originalY
+    }
+}

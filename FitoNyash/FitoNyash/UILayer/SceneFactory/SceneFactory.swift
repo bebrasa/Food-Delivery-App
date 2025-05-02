@@ -103,7 +103,7 @@ struct SceneFactory {
         let presenter = LoginPresenter(coordinator: coordinator)
         let viewController = LoginViewController(viewOutput: presenter, state: .base)
         presenter.viewInput = viewController
-        
+      
         return viewController
     }
     
