@@ -71,25 +71,25 @@ struct SceneFactory {
     static func makeMainFlow(coordinator: AppCoordinator, finishDelegate: CoordinatorFinishDelegate) -> TabBarController {
         let homeNavigationController = UINavigationController()
         let homeCoordinator = HomeCoordinator(type: .home, navigationController: homeNavigationController)
-        homeNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "house"), tag: 0)
+        homeNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(resource: .homePage), tag: 0)
         homeCoordinator.finishDelegate = finishDelegate
         homeCoordinator.start()
         
         let orderNavigationController = UINavigationController()
         let orderCoordinator = OrderCoordinator(type: .order, navigationController: orderNavigationController)
-        orderNavigationController.tabBarItem = UITabBarItem(title: "Order", image: UIImage(systemName: "house"), tag: 1)
+        orderNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(resource: .orderPage), tag: 1)
         orderCoordinator.finishDelegate = finishDelegate
         orderCoordinator.start()
         
         let favoriteNavigationController = UINavigationController()
         let favoriteCoordinator = FavoriteCoordinator(type: .favorite, navigationController: favoriteNavigationController)
-        favoriteNavigationController.tabBarItem = UITabBarItem(title: "Fav", image: UIImage(systemName: "house"), tag: 2)
+        favoriteNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(resource: .favPage), tag: 2)
         favoriteCoordinator.finishDelegate = finishDelegate
         favoriteCoordinator.start()
         
         let profileNavigationController = UINavigationController()
         let profileCoordinator = ProfileCoordinator(type: .profile, navigationController: profileNavigationController)
-        profileNavigationController.tabBarItem = UITabBarItem(title: "profile", image: UIImage(systemName: "house"), tag: 3)
+        profileNavigationController.tabBarItem = UITabBarItem(title: "", image: UIImage(resource: .profilePage), tag: 3)
         profileCoordinator.finishDelegate = finishDelegate
         profileCoordinator.start()
         

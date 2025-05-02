@@ -25,5 +25,9 @@ class TabBarController: UITabBarController {
         
         tabBar.backgroundColor = AppColors.backgroundWhite
         tabBar.tintColor = AppColors.accentGreen
+        tabBar.itemPositioning = .centered
+        tabBar.itemWidth = 22.0
+        tabBar.itemSpacing = 66.5
+        
     }
 }
