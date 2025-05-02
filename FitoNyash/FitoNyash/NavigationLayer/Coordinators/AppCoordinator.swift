@@ -32,7 +32,8 @@ class AppCoordinator: Coordinator{
 private extension AppCoordinator {
     func showOnboardingFlow() {
         guard let navigationController = navigationController else { return }
-        factory.makeOnboardingFlow(coordinator: self, finishDelegate: self, navigationController: navigationController)
+        let onboardingCoordinator = factory.makeOnboardingFlow(coordinator: self, finishDelegate: self, navigationController: navigationController)
+        onboardingCoordinator.start()
     }
     func showMainFlow() {
         guard let navigationController = navigationController else { return }
@@ -41,24 +42,8 @@ private extension AppCoordinator {
     }
     func showAuthFlow() {
         guard let navigationController = navigationController else { return }
-        let viewController = factory.makeAuthScene(coordinator: self)
-        navigationController.pushViewController(viewController, animated: true)
-    }
-}
-
-extension AppCoordinator {
-    func showSignInFlow() {
-        guard let navigationController = navigationController else { return }
-        let viewController = factory.makeSignInScene(coordinator: self)
-        navigationController.pushViewController(viewController, animated: true)
-    }
-    func showSignUpFlow() {
-        guard let navigationController = navigationController else { return }
-        let viewController = factory.makeSignUpScene(coordinator: self)
-        navigationController.pushViewController(viewController, animated: true)
-    }
-    func showMainScreen() {
-        showMainFlow()
+        let loginCoordinator = factory.makeLoginFlow(coordinator: self, finishDelegate: self, navigationController: navigationController)
+        loginCoordinator.start()
     }
 }
 
@@ -72,6 +57,9 @@ extension AppCoordinator: CoordinatorFinishDelegate {
             showAuthFlow()
         case .app:
             return
+        case .login:
+            navigationController?.viewControllers.removeAll()
+            showMainFlow()
         default:
             navigationController?.popToRootViewController(animated: false)
         }

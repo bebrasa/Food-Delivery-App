@@ -19,7 +19,7 @@ class OnboardingCoordinator: Coordinator {
     }
     
     override func finish() {
-        print("AppCoordinator finished")
+        print("OnboardnigCoordinator finished")
         finishDelegate?.coordinatorDidFinish(childCoordinator: self)
     }
     

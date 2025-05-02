@@ -171,7 +171,9 @@ private extension LoginViewController {
         signInButton.translatesAutoresizingMaskIntoConstraints = false
 
         signInButton.layer.cornerRadius = 24
-        signInButton.action = onSignInTapped
+        signInButton.action = { [weak self] in
+            self?.onSignInTapped()
+        }
         
         switch state {
         case .base:
@@ -275,7 +277,9 @@ private extension LoginViewController {
         signUpButton.setTitleColor(AppColors.labelBlack)
         signUpButton.backgroundColor = AppColors.backgroundWhite
         signUpButton.layer.cornerRadius = 24
-        signUpButton.action = onSignUpTapped
+        signUpButton.action = { [weak self] in
+            self?.onSignUpTapped()
+        }
         
         
         NSLayoutConstraint.activate([
@@ -315,7 +319,7 @@ private extension LoginViewController {
         case .login:
             print(#function)
             viewOutput.loginStart(login: signInUsername.text ?? "", password: signInPassword.text ?? "")
-        case .sighUp:
+        case .signUp:
             return
         }
     }
