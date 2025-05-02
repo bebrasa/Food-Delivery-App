@@ -78,6 +78,7 @@ private extension LoginViewController {
             setupTitleLabel()
             setupSignInButton()
             setupforgotPasswordLabel()
+            setupNavigationBar()
         case .signUp:
             view.backgroundColor = .white
             setupSignUpPassword()
@@ -85,7 +86,15 @@ private extension LoginViewController {
             setupSignUpUsername()
             setupSignInButton()
             setupTitleLabel()
+            setupNavigationBar()
         }
+    }
+    
+    func setupNavigationBar(){
+        let backImage = UIImage(resource: .back)
+        let backButton = UIBarButtonItem(image: backImage, style: .plain, target: navigationController, action: #selector(navigationController?.popViewController(animated:)))
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.leftBarButtonItem?.tintColor = AppColors.labelBlack
     }
     func setupSignInPassword() {
         view.addSubview(signInPassword)
@@ -151,7 +160,7 @@ private extension LoginViewController {
             logoImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 227),
             logoImage.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 115),
             logoImage.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -115),
-            logoImage.heightAnchor.constraint(equalToConstant: 163),
+            logoImage.heightAnchor.constraint(equalToConstant: 158),
             logoImage.widthAnchor.constraint(equalToConstant: 158)
         ])
     }
@@ -341,10 +350,3 @@ private extension LoginViewController {
         self.view.frame.origin.y = originalY
     }
 }
-
-//#Preview("LoginVC") {
-//    let presenter = LoginPresenter()
-//    let viewController = LoginViewController(viewOutput: presenter, state: .login)
-//    presenter.viewInput = viewController
-//    return viewController
-//}
