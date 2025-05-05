@@ -14,5 +14,6 @@ enum AppColors {
     static let labelBlack = UIColor.hex(0x000000)
     static let placeholderGrey = UIColor.hex(0xECF0F1)
     static let forgotPasswordBlue = UIColor.hex(0x34495E)
+    static let categoryGray = UIColor.hex(0x505050)
 }
  
