@@ -55,16 +55,16 @@ class SmallHViewCell: UICollectionViewCell {
             height = 40.89
         case .salad:
             image = UIImage(resource: .drinks)
-            width = 40.89
-            height = 38.34
+            width = 35.03
+            height = 41.36
         case .seafood:
             image = UIImage(resource: .drinks)
-            width = 35
-            height = 20
+            width = 35.03
+            height = 41.36
         case .soup:
             image = UIImage(resource: .drinks)
-            width = 20
-            height = 20
+            width = 35.03
+            height = 41.36
         case .none:
             print(category)
         }
