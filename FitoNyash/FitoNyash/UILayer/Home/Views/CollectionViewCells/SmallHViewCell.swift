@@ -25,10 +25,12 @@ class SmallHViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with category: FoodCategories) {
+    func configure(with category: FoodCategories, isSelectedCategory: Bool) {
         bottomLabel.text = category.rawValue
         bottomLabel.font = .Roboto.regular.size(of: 14)
         bottomLabel.textColor = AppColors.labelBlack
+        
+        isCategorySelected = isSelectedCategory
 
         var image: UIImage?
         var width: CGFloat = 30
@@ -78,16 +80,14 @@ class SmallHViewCell: UICollectionViewCell {
         
         imageWidthConstraint?.isActive = true
         imageHeightConstraint?.isActive = true
+        imageView.image = image?.withRenderingMode(.alwaysTemplate)
+            imageView.tintColor = isSelectedCategory ? .white : AppColors.categoryGray
+            topView.backgroundColor = isSelectedCategory ? AppColors.accentGreen : AppColors.placeholderGrey
     }
     func toggleSelection() {
         isCategorySelected.toggle()
-        if isCategorySelected {
-            imageView.image?.withTintColor(AppColors.backgroundWhite)
-            topView.backgroundColor = AppColors.accentGreen
-        } else {
-            imageView.image?.withTintColor(AppColors.categoryGray)
-            topView.backgroundColor = AppColors.placeholderGrey
-        }
+        imageView.tintColor = isCategorySelected ? .white : AppColors.categoryGray
+        topView.backgroundColor = isCategorySelected ? AppColors.accentGreen : AppColors.placeholderGrey
     }
     
     func setupCell() {

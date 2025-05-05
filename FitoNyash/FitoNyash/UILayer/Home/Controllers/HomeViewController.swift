@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
     private let geoMarkImage = UIImageView()
     private let geoLable = UILabel()
     private let verticalCollectionTitle = FNCollectionTitle()
+    private var selectedCategory: FoodCategories?
     
     lazy var smallHCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -244,7 +245,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case 1:
             let category = presenter.categoryData[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHViewCell", for: indexPath) as? SmallHViewCell
-            cell?.configure(with: category)
+            let isSelected = (category == selectedCategory)
+            cell?.configure(with: category, isSelectedCategory: isSelected)
             return cell ?? UICollectionViewCell()
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigHViewCell", for: indexPath)
@@ -254,6 +256,19 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         default:
             return UICollectionViewCell()
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionView.tag {
+        case 1:
+            selectedCategory = presenter.categoryData[indexPath.row]
+            collectionView.reloadData()
+        case 2:
+            print()
+        case 3:
+            print()
+        default:
+            print()
         }
     }
 }
