@@ -11,6 +11,10 @@ class SmallHViewCell: UICollectionViewCell {
     
     let topView = UIView()
     let bottomLabel = UILabel()
+    let imageView = UIImageView()
+    var isCategorySelected = false
+    private var imageWidthConstraint: NSLayoutConstraint?
+    private var imageHeightConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,9 +24,74 @@ class SmallHViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func configure(with category: FoodCategories) {
+        bottomLabel.text = category.rawValue
+        bottomLabel.font = .Roboto.regular.size(of: 14)
+        bottomLabel.textColor = AppColors.labelBlack
+
+        var image: UIImage?
+        var width: CGFloat = 30
+        var height: CGFloat = 30
+        
+        switch category {
+        case .drink:
+            image = UIImage(resource: .drinks)
+            width = 35.03
+            height = 41.36
+        case .food:
+            image = UIImage(resource: .food)
+            width = 42.88
+            height = 41.22
+        case .snack:
+            image = UIImage(resource: .snacks)
+            width = 44.24
+            height = 31.51
+        case .dessert:
+            image = UIImage(resource: .dessert)
+            width = 38.34
+            height = 40.89
+        case .salad:
+            image = UIImage(resource: .drinks)
+            width = 40.89
+            height = 38.34
+        case .seafood:
+            image = UIImage(resource: .drinks)
+            width = 35
+            height = 20
+        case .soup:
+            image = UIImage(resource: .drinks)
+            width = 20
+            height = 20
+        case .none:
+            print(category)
+        }
+
+        imageView.image = image?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = AppColors.categoryGray
+
+        imageWidthConstraint?.isActive = false
+        imageHeightConstraint?.isActive = false
+        
+        imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: width)
+        imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: height)
+        
+        imageWidthConstraint?.isActive = true
+        imageHeightConstraint?.isActive = true
+    }
+    func toggleSelection() {
+        isCategorySelected.toggle()
+        if isCategorySelected {
+            imageView.image?.withTintColor(AppColors.backgroundWhite)
+            topView.backgroundColor = AppColors.accentGreen
+        } else {
+            imageView.image?.withTintColor(AppColors.categoryGray)
+            topView.backgroundColor = AppColors.placeholderGrey
+        }
+    }
     
     func setupCell() {
-        contentView.backgroundColor = .blue
+        contentView.backgroundColor = .clear
         
         setupTopView()
         setupBottomLabel()
@@ -32,7 +101,7 @@ class SmallHViewCell: UICollectionViewCell {
         contentView.addSubview(topView)
         
         topView.translatesAutoresizingMaskIntoConstraints = false
-        topView.backgroundColor = .green
+        topView.backgroundColor = AppColors.placeholderGrey
         topView.layer.cornerRadius = 20
         topView.layer.masksToBounds = true
         
@@ -42,7 +111,15 @@ class SmallHViewCell: UICollectionViewCell {
             topView.widthAnchor.constraint(equalToConstant: 70),
             topView.heightAnchor.constraint(equalToConstant: 70)
         ])
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        topView.addSubview(imageView)
         
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: topView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor)
+        ])
     }
     func setupBottomLabel() {
         contentView.addSubview(bottomLabel)

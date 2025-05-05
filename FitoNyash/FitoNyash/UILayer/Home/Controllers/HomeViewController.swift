@@ -9,6 +9,10 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    //MARK: - Properties
+    let presenter: HomePresenterProtocol
+    
+    //MARK: - Views
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let searchField = FNSearchField()
@@ -44,7 +48,18 @@ class HomeViewController: UIViewController {
         collection.tag = 3
         return collection
     }()
-
+    
+    //MARK: - Inits
+    init(presenter: HomePresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -127,11 +142,12 @@ extension HomeViewController {
     func setupSmallHCollection() {
         contentView.addSubview(smallHCollection)
         
-        smallHCollection.backgroundColor = .red
+        smallHCollection.backgroundColor = .clear
         smallHCollection.translatesAutoresizingMaskIntoConstraints = false
         smallHCollection.delegate = self
         smallHCollection.dataSource = self
         smallHCollection.register(SmallHViewCell.self, forCellWithReuseIdentifier: "SmallHViewCell")
+        smallHCollection.showsHorizontalScrollIndicator = false
         
         NSLayoutConstraint.activate([
             smallHCollection.topAnchor.constraint(equalTo: geoMarkImage.topAnchor, constant: 50),
@@ -148,9 +164,10 @@ extension HomeViewController {
         bigHCollection.delegate = self
         bigHCollection.dataSource = self
         bigHCollection.register(BigHViewCell.self, forCellWithReuseIdentifier: "BigHViewCell")
+        bigHCollection.showsHorizontalScrollIndicator = false
         
         NSLayoutConstraint.activate([
-            bigHCollection.topAnchor.constraint(equalTo: smallHCollection.bottomAnchor, constant: 73),
+            bigHCollection.topAnchor.constraint(equalTo: smallHCollection.bottomAnchor, constant: 52),
             bigHCollection.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
             bigHCollection.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             bigHCollection.heightAnchor.constraint(equalToConstant: 130*2+20)
@@ -185,7 +202,7 @@ extension HomeViewController {
         ])
     }
     func calculateContentSize() {
-        var totalHeight: CGFloat = 300 + 50 + 22 + 60 +  50 + smallHCollection.bounds.height + bigHCollection.bounds.height
+        var totalHeight: CGFloat = 300 + 50 + 22 + 60 +  50 + 20 + smallHCollection.bounds.height + bigHCollection.bounds.height
         for index in 0..<bigVerticalCollection.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: index, section: 0)
             let cellHeight = collectionView(bigVerticalCollection, layout: bigVerticalCollection.collectionViewLayout, sizeForItemAt: indexPath).height
@@ -212,7 +229,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {
         case 1:
-            return 30
+            return presenter.categoryData.count
         case 2:
             return 15
         case 3:
@@ -225,8 +242,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView.tag {
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHViewCell", for: indexPath)
-            return cell
+            let category = presenter.categoryData[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHViewCell", for: indexPath) as? SmallHViewCell
+            cell?.configure(with: category)
+            return cell ?? UICollectionViewCell()
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigHViewCell", for: indexPath)
             return cell
