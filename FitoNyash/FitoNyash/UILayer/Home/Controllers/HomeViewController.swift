@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
     private let geoMarkImage = UIImageView()
     private let geoLable = UILabel()
     private let verticalCollectionTitle = FNCollectionTitle()
+    private var selectedCategory: FoodCategories?
     
     lazy var smallHCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -74,6 +75,7 @@ extension HomeViewController {
         configureContentView()
         prepareScrollView()
         setupSearchBar()
+        setupKeyboardDismissGesture()
         setupGeoMark()
         setupGeoLable()
         setupSmallHCollection()
@@ -82,6 +84,16 @@ extension HomeViewController {
         setupBigVerticalCollection()
         calculateContentSize()
     }
+    private func setupKeyboardDismissGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     func setupView() {
         view.backgroundColor = AppColors.backgroundWhite
     }
@@ -120,7 +132,7 @@ extension HomeViewController {
             geoMarkImage.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 10),
             geoMarkImage.heightAnchor.constraint(equalToConstant: 20),
             geoMarkImage.widthAnchor.constraint(equalToConstant: 14),
-            geoMarkImage.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 30)
+            geoMarkImage.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 33)
         ])
     }
     func setupGeoLable() {
@@ -147,6 +159,7 @@ extension HomeViewController {
         smallHCollection.delegate = self
         smallHCollection.dataSource = self
         smallHCollection.register(SmallHViewCell.self, forCellWithReuseIdentifier: "SmallHViewCell")
+        smallHCollection.clipsToBounds = false
         smallHCollection.showsHorizontalScrollIndicator = false
         
         NSLayoutConstraint.activate([
@@ -159,11 +172,12 @@ extension HomeViewController {
     func setupBigHCollection() {
         contentView.addSubview(bigHCollection)
         
-        bigHCollection.backgroundColor = .red
+        bigHCollection.backgroundColor = .clear
         bigHCollection.translatesAutoresizingMaskIntoConstraints = false
         bigHCollection.delegate = self
         bigHCollection.dataSource = self
         bigHCollection.register(BigHViewCell.self, forCellWithReuseIdentifier: "BigHViewCell")
+        bigHCollection.clipsToBounds = false
         bigHCollection.showsHorizontalScrollIndicator = false
         
         NSLayoutConstraint.activate([
@@ -187,11 +201,11 @@ extension HomeViewController {
     func setupBigVerticalCollection() {
         contentView.addSubview(bigVerticalCollection)
         
-        bigVerticalCollection.backgroundColor = .red
+        bigVerticalCollection.backgroundColor = .clear
         bigVerticalCollection.translatesAutoresizingMaskIntoConstraints = false
         bigVerticalCollection.delegate = self
         bigVerticalCollection.dataSource = self
-        bigVerticalCollection.register(BigHViewCell.self, forCellWithReuseIdentifier: "BigHViewCell")
+        bigVerticalCollection.register(BigVerticalViewCell.self, forCellWithReuseIdentifier: "BigVerticalViewCell")
         
         NSLayoutConstraint.activate([
             bigVerticalCollection.topAnchor.constraint(equalTo: verticalCollectionTitle.bottomAnchor, constant: 26),
@@ -202,7 +216,7 @@ extension HomeViewController {
         ])
     }
     func calculateContentSize() {
-        var totalHeight: CGFloat = 300 + 50 + 22 + 60 +  50 + 20 + smallHCollection.bounds.height + bigHCollection.bounds.height
+        var totalHeight: CGFloat = 300 + 50 + 22 + 60 +  50 + 20 + 45 + smallHCollection.bounds.height + bigHCollection.bounds.height
         for index in 0..<bigVerticalCollection.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: index, section: 0)
             let cellHeight = collectionView(bigVerticalCollection, layout: bigVerticalCollection.collectionViewLayout, sizeForItemAt: indexPath).height
@@ -231,9 +245,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case 1:
             return presenter.categoryData.count
         case 2:
-            return 15
+            return presenter.foodMenuData.count
         case 3:
-            return 14
+            return presenter.foodListData.count
         default:
             return 0
         }
@@ -244,16 +258,39 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case 1:
             let category = presenter.categoryData[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SmallHViewCell", for: indexPath) as? SmallHViewCell
-            cell?.configure(with: category)
+            let isSelected = (category == selectedCategory)
+            cell?.configure(with: category, isSelectedCategory: isSelected)
             return cell ?? UICollectionViewCell()
         case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigHViewCell", for: indexPath)
-            return cell
+            let menu = presenter.foodMenuData[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigHViewCell", for: indexPath) as? BigHViewCell
+            cell?.configureBigHCell(with: menu)
+            return cell ?? UICollectionViewCell()
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigHViewCell", for: indexPath)
-            return cell
+            let foodList = presenter.foodListData[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalViewCell", for: indexPath) as? BigVerticalViewCell
+            cell?.configureVerticalCell(with: foodList)
+            return cell ?? UICollectionViewCell()
         default:
             return UICollectionViewCell()
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionView.tag {
+        case 1:
+            let selected = presenter.categoryData[indexPath.row]
+            if selectedCategory == selected {
+                selectedCategory = nil
+            } else {
+                selectedCategory = selected
+            }
+            collectionView.reloadData()
+        case 2:
+            print()
+        case 3:
+            print()
+        default:
+            print()
         }
     }
 }
