@@ -11,6 +11,8 @@ class HomeViewController: UIViewController {
     
     //MARK: - Properties
     let presenter: HomePresenterProtocol
+    private var selectedCategory: FoodCategories?
+    private var isHeartTapped = false
     
     //MARK: - Views
     private let scrollView = UIScrollView()
@@ -19,7 +21,8 @@ class HomeViewController: UIViewController {
     private let geoMarkImage = UIImageView()
     private let geoLable = UILabel()
     private let verticalCollectionTitle = FNCollectionTitle()
-    private var selectedCategory: FoodCategories?
+    lazy var heartButton = UIButton()
+    
     
     lazy var smallHCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -99,7 +102,7 @@ extension HomeViewController {
     }
     func configureScrollView() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         scrollView.backgroundColor = .clear
     }
@@ -270,6 +273,15 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let foodList = presenter.foodListData[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalViewCell", for: indexPath) as? BigVerticalViewCell
             cell?.configureVerticalCell(with: foodList)
+            let item = presenter.foodListData[indexPath.item]
+            cell?.updateHeartButton(isLiked: presenter.isFavorite(at: indexPath.item))
+
+            cell?.onHeartButtonTapped = { [weak self] in
+                guard let self = self else { return }
+                self.presenter.toggleFavorite(at: indexPath.item)
+                cell?.updateHeartButton(isLiked: self.presenter.isFavorite(at: indexPath.item))
+            }
+            
             return cell ?? UICollectionViewCell()
         default:
             return UICollectionViewCell()

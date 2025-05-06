@@ -128,10 +128,17 @@ struct SceneFactory {
         
         return viewController
     }
-    
+    //MARK: - Home scene
     static func makeHomeScene(coordinator: HomeCoordinator) -> HomeViewController {
         let presenter = HomePresenter(coordinator: coordinator)
         let controller = HomeViewController(presenter: presenter)
+        return controller
+    }
+    
+    //MARK: - Favorite scene
+    static func makeFavoriteScene(coordinator: FavoriteCoordinator) -> FavoriteViewController {
+        let presenter = FavoritePresenter(coordinator: coordinator)
+        let controller = FavoriteViewController(presenter: presenter)
         return controller
     }
 }

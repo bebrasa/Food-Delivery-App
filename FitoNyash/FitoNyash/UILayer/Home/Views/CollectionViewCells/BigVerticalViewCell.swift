@@ -12,6 +12,7 @@ class BigVerticalViewCell: UICollectionViewCell {
     let topView = UIView()
     let titleView = UILabel()
     let imageView = UIImageView()
+    let heartButton = UIButton()
     private var imageWidthConstraint: NSLayoutConstraint?
     private var imageHeightConstraint: NSLayoutConstraint?
     
@@ -130,6 +131,7 @@ class BigVerticalViewCell: UICollectionViewCell {
         
         setupTopView()
         setupBottomLabel()
+        setupHeartButton()
     }
     
     func setupTopView() {
@@ -164,6 +166,45 @@ class BigVerticalViewCell: UICollectionViewCell {
             titleView.topAnchor.constraint(equalTo: topView.topAnchor, constant: 10),
             titleView.leftAnchor.constraint(equalTo: topView.rightAnchor, constant: 13)
         ])
+    }
+    
+    var onHeartButtonTapped: (() -> Void)?
+    func setupHeartButton() {
+        contentView.addSubview(heartButton)
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .default)
+        let image = UIImage(systemName: "heart", withConfiguration: config)
+        heartButton.setImage(image, for: .normal)
+        heartButton.tintColor = AppColors.accentGreen
+        
+        heartButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            heartButton.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
+            heartButton.leftAnchor.constraint(equalTo: topView.rightAnchor, constant: 13)
+            ])
+        
+        heartButton.addTarget(self, action: #selector(heartButtonPressed), for: .touchUpInside)
+        }
+    func updateHeartButton(isLiked: Bool) {
+        let imageName = isLiked ? "heart.fill" : "heart"
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+        let image = UIImage(systemName: imageName, withConfiguration: config)
+        heartButton.setImage(image, for: .normal)
+    }
+    @objc private func heartButtonPressed() {
+        animateHeart()
+        onHeartButtonTapped?()
+    }
+    private func animateHeart() {
+        UIView.animate(withDuration: 0.1,
+                       animations: {
+                           self.heartButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                       }, completion: { _ in
+                           UIView.animate(withDuration: 0.1) {
+                               self.heartButton.transform = .identity
+                           }
+                       })
     }
 }
 
