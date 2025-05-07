@@ -13,6 +13,10 @@ class BigVerticalViewCell: UICollectionViewCell {
     let titleView = UILabel()
     let imageView = UIImageView()
     let heartButton = UIButton()
+    let massOfProduct = UILabel()
+    let caloryValue = UILabel()
+    let productPrice = UILabel()
+    let addToCartButton = UIButton()
     private var imageWidthConstraint: NSLayoutConstraint?
     private var imageHeightConstraint: NSLayoutConstraint?
     
@@ -39,6 +43,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             imageView.image = image
             width = 130
             height = 130
+            massOfProduct.text = "220 г"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -50,6 +55,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             imageView.image = image
             width = 130
             height = 130
+            massOfProduct.text = "180 г"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -61,6 +67,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             imageView.image = image
             width = 130
             height = 130
+            massOfProduct.text = "250 г"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -72,6 +79,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             imageView.image = image
             width = 130
             height = 130
+            massOfProduct.text = "300 г"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -83,6 +91,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             imageView.image = image
             width = 130
             height = 130
+            massOfProduct.text = "200 г"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -94,6 +103,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             imageView.image = image
             width = 130
             height = 130
+            massOfProduct.text = "280 мл"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -105,6 +115,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             imageView.image = image
             width = 130
             height = 130
+            massOfProduct.text = "330 мл"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -132,6 +143,7 @@ class BigVerticalViewCell: UICollectionViewCell {
         setupTopView()
         setupBottomLabel()
         setupHeartButton()
+        setupMassOfProduct()
     }
     
     func setupTopView() {
@@ -180,7 +192,7 @@ class BigVerticalViewCell: UICollectionViewCell {
         heartButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            heartButton.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
+            heartButton.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -10),
             heartButton.leftAnchor.constraint(equalTo: topView.rightAnchor, constant: 13)
             ])
         
@@ -205,6 +217,20 @@ class BigVerticalViewCell: UICollectionViewCell {
                                self.heartButton.transform = .identity
                            }
                        })
+    }
+    func setupMassOfProduct() {
+        contentView.addSubview(massOfProduct)
+        
+        massOfProduct.font = .Roboto.thin.size(of: 14)
+        massOfProduct.text = "220 г"
+        massOfProduct.textColor = AppColors.labelBlack
+        
+        massOfProduct.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            massOfProduct.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 8),
+            massOfProduct.leftAnchor.constraint(equalTo: topView.rightAnchor, constant: 13)
+        ])
     }
 }
 

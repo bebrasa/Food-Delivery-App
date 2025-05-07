@@ -23,8 +23,6 @@ class HomePresenter: HomePresenterProtocol {
     var foodMenuData = [FoodMenu]()
     var foodListData = [FoodList]()
     
-    var favoriteFoodListItems: Set<FoodList> = []
-    
     //MARK: - Inits
     init(coordinator: HomeCoordinator) {
         self.coordinator = coordinator
@@ -37,18 +35,17 @@ class HomePresenter: HomePresenterProtocol {
     func getSelectedCategory() -> FoodCategories {
         return .none
     }
+    
     func toggleFavorite(at index: Int) {
         let item = foodListData[index]
-        if favoriteFoodListItems.contains(item) {
-            favoriteFoodListItems.remove(item)
-        } else {
-            favoriteFoodListItems.insert(item)
-        }
+        UserStorage.shared.toggleFavorite(item)
+        NotificationCenter.default.post(name: NSNotification.Name("FavoritesDidChange"), object: nil)
     }
 
     func isFavorite(at index: Int) -> Bool {
-        return favoriteFoodListItems.contains(foodListData[index])
+        return UserStorage.shared.isFavorite(foodListData[index])
     }
+    
     private func getCategoryData() {
         categoryData = [.drink, .food, .snack, .dessert, .salad, .seafood, .soup]
     }

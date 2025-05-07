@@ -12,7 +12,7 @@ class FavoriteCoordinator: Coordinator {
     private let factory = SceneFactory.self
     
     override func start() {
-
+        showFavoriteScene()
     }
     
     override func finish() {
