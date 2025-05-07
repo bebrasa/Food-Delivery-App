@@ -198,6 +198,8 @@ class BigVerticalViewCell: UICollectionViewCell {
     }
     
     var onHeartButtonTapped: (() -> Void)?
+    var onAddToCartTapped: (() -> Void)?
+    
     func setupHeartButton() {
         contentView.addSubview(heartButton)
         
@@ -291,6 +293,24 @@ class BigVerticalViewCell: UICollectionViewCell {
             addToCartButton.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
             addToCartButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10)
         ])
+        
+        addToCartButton.addTarget(self, action: #selector(cartButtonPressed), for: .touchUpInside)
+    }
+    
+    @objc private func cartButtonPressed() {
+        animateCartButton()
+        onAddToCartTapped?()
+    }
+    
+    private func animateCartButton() {
+        UIView.animate(withDuration: 0.1,
+                      animations: {
+            self.addToCartButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.addToCartButton.transform = .identity
+            }
+        })
     }
 }
 

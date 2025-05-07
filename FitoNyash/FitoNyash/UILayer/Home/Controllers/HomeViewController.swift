@@ -270,16 +270,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell?.configureBigHCell(with: menu)
             return cell ?? UICollectionViewCell()
         case 3:
-            let foodList = presenter.foodListData[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BigVerticalViewCell", for: indexPath) as? BigVerticalViewCell
+            let foodList = presenter.foodListData[indexPath.row]
             cell?.configureVerticalCell(with: foodList)
-            let item = presenter.foodListData[indexPath.item]
             cell?.updateHeartButton(isLiked: presenter.isFavorite(at: indexPath.item))
-
+            
             cell?.onHeartButtonTapped = { [weak self] in
                 guard let self = self else { return }
                 self.presenter.toggleFavorite(at: indexPath.item)
                 cell?.updateHeartButton(isLiked: self.presenter.isFavorite(at: indexPath.item))
+            }
+            
+            cell?.onAddToCartTapped = { [weak self] in
+                guard let self = self else { return }
+                UserStorage.shared.addToCart(foodList)
             }
             
             return cell ?? UICollectionViewCell()

@@ -16,7 +16,7 @@ class FavoriteCoordinator: Coordinator {
     }
     
     override func finish() {
-        print("AppCoordinator finished")
+        print("FavCoordinator finished")
     }
     
 }
