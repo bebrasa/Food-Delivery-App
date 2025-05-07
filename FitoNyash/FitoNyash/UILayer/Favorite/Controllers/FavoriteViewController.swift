@@ -127,7 +127,7 @@ extension FavoriteViewController {
         collectionView.showsVerticalScrollIndicator = false
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 40),
+            collectionView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 33),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
