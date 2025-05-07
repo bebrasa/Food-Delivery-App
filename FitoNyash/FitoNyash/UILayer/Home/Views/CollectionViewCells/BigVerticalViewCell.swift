@@ -44,6 +44,8 @@ class BigVerticalViewCell: UICollectionViewCell {
             width = 130
             height = 130
             massOfProduct.text = "220 г"
+            caloryValue.text = "КБЖУ: 290/8/7/48"
+            productPrice.text = "390 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -56,6 +58,8 @@ class BigVerticalViewCell: UICollectionViewCell {
             width = 130
             height = 130
             massOfProduct.text = "180 г"
+            caloryValue.text = "КБЖУ: 340/13/21/22"
+            productPrice.text = "420 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -68,6 +72,8 @@ class BigVerticalViewCell: UICollectionViewCell {
             width = 130
             height = 130
             massOfProduct.text = "250 г"
+            caloryValue.text = "КБЖУ: 450/20/18/45"
+            productPrice.text = "370 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -80,6 +86,8 @@ class BigVerticalViewCell: UICollectionViewCell {
             width = 130
             height = 130
             massOfProduct.text = "300 г"
+            caloryValue.text = "КБЖУ: 510/22/16/60"
+            productPrice.text = "760 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -92,6 +100,8 @@ class BigVerticalViewCell: UICollectionViewCell {
             width = 130
             height = 130
             massOfProduct.text = "200 г"
+            caloryValue.text = "КБЖУ: 180/4/9/20"
+            productPrice.text = "620 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -104,6 +114,8 @@ class BigVerticalViewCell: UICollectionViewCell {
             width = 130
             height = 130
             massOfProduct.text = "280 мл"
+            caloryValue.text = "КБЖУ: 180/3/2/40"
+            productPrice.text = "350 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -116,6 +128,8 @@ class BigVerticalViewCell: UICollectionViewCell {
             width = 130
             height = 130
             massOfProduct.text = "330 мл"
+            caloryValue.text = "КБЖУ: 65/0/0/16"
+            productPrice.text = "280 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -144,6 +158,9 @@ class BigVerticalViewCell: UICollectionViewCell {
         setupBottomLabel()
         setupHeartButton()
         setupMassOfProduct()
+        setupCaloryOfProduct()
+        setupProductPrice()
+        setupCartButton()
     }
     
     func setupTopView() {
@@ -221,15 +238,58 @@ class BigVerticalViewCell: UICollectionViewCell {
     func setupMassOfProduct() {
         contentView.addSubview(massOfProduct)
         
-        massOfProduct.font = .Roboto.thin.size(of: 14)
+        massOfProduct.font = .Roboto.regular.size(of: 14)
         massOfProduct.text = "220 г"
-        massOfProduct.textColor = AppColors.labelBlack
+        massOfProduct.textColor = AppColors.labelBlack.withAlphaComponent(0.5)
         
         massOfProduct.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             massOfProduct.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 8),
             massOfProduct.leftAnchor.constraint(equalTo: topView.rightAnchor, constant: 13)
+        ])
+    }
+    func setupCaloryOfProduct() {
+        contentView.addSubview(caloryValue)
+        
+        caloryValue.font = .Roboto.regular.size(of: 12)
+        caloryValue.text = "220 г"
+        caloryValue.textColor = AppColors.labelBlack.withAlphaComponent(0.5)
+        
+        caloryValue.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            caloryValue.topAnchor.constraint(equalTo: massOfProduct.bottomAnchor, constant: 5),
+            caloryValue.leftAnchor.constraint(equalTo: topView.rightAnchor, constant: 13)
+        ])
+    }
+    func setupProductPrice() {
+        contentView.addSubview(productPrice)
+        
+        productPrice.font = .Roboto.regular.size(of: 18)
+        productPrice.text = "220 г"
+        productPrice.textColor = AppColors.labelBlack
+        
+        productPrice.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            productPrice.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -10),
+            productPrice.leftAnchor.constraint(equalTo: heartButton.rightAnchor, constant: 10)
+        ])
+    }
+    func setupCartButton() {
+        contentView.addSubview(addToCartButton)
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)
+        let image = UIImage(systemName: "plus.circle.fill", withConfiguration: config)
+        addToCartButton.setImage(image, for: .normal)
+        addToCartButton.tintColor = AppColors.accentGreen
+        
+        addToCartButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            addToCartButton.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
+            addToCartButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10)
         ])
     }
 }
