@@ -141,4 +141,10 @@ struct SceneFactory {
         let controller = FavoriteViewController(presenter: presenter)
         return controller
     }
+    //MARK: - Cart scene
+    static func makeCartScene(coordinator: OrderCoordinator) -> CartViewController {
+        let presenter = CartPresenter(coordinator: coordinator)
+        let controller = CartViewController(presenter: presenter)
+        return controller
+    }
 }

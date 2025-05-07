@@ -9,14 +9,23 @@ import UIKit
 
 class OrderCoordinator: Coordinator {
     
+    private let factory = SceneFactory.self
+    
     override func start() {
-        let vc = ViewController()
-        vc.view.backgroundColor = .yellow
-        navigationController?.pushViewController(vc, animated: true)
+        showCartScene()
     }
     
     override func finish() {
-        print("AppCoordinator finished")
+        print("CartCoordinator finished")
     }
     
+}
+
+//MARK: - Navigation
+extension OrderCoordinator {
+    func showCartScene() {
+        guard let navigationController = navigationController else { return }
+        let viewController = factory.makeCartScene(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
 }
