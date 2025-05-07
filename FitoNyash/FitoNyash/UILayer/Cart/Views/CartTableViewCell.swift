@@ -192,8 +192,26 @@ class CartTableViewCell: UITableViewCell {
         titleLabel.text = food.rawValue
         quantityLabel.text = "\(quantity) шт"
         
-        // TODO: Add price calculation based on food type
-        priceLabel.text = "390 ₽"
+        let price: Int
+        switch food {
+        case .cereal:
+            price = 390
+        case .filadelphia:
+            price = 420
+        case .california:
+            price = 760
+        case .bananaWithBerries:
+            price = 350
+        case .vitaminDrink:
+            price = 280
+        case .none:
+            price = 0
+        case .egg:
+            price = 420
+        case .salad:
+            price = 620
+        }
+        priceLabel.text = "\(price) ₽"
         
         // TODO: Add image configuration
         productImageView.image = UIImage(resource: .cereal)

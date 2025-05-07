@@ -42,7 +42,26 @@ class CartViewController: UIViewController {
         let table = UITableView()
         table.backgroundColor = .clear
         table.separatorStyle = .none
+        table.showsVerticalScrollIndicator = false
         return table
+    }()
+    
+    private let totalPriceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Итого: 0 ₽"
+        label.textColor = AppColors.labelBlack
+        label.font = UIFont.Roboto.regular.size(of: 18)
+        return label
+    }()
+    
+    private let orderButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Заказать", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.Roboto.regular.size(of: 16)
+        button.backgroundColor = AppColors.accentGreen
+        button.layer.cornerRadius = 20
+        return button
     }()
     
     // MARK: - Inits
@@ -61,6 +80,7 @@ class CartViewController: UIViewController {
         setupLayout()
         setupNotifications()
         updateEmptyState()
+        updateTotalPrice()
     }
     
     deinit {
@@ -84,6 +104,7 @@ class CartViewController: UIViewController {
             UIView.animate(withDuration: 0.3) {
                 self.tableView.reloadData()
                 self.updateEmptyState()
+                self.updateTotalPrice()
             }
         }
     }
@@ -94,7 +115,36 @@ class CartViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             self.emptyStateLabel.alpha = isEmpty ? 1.0 : 0.0
             self.emptyStateLabel.isHidden = !isEmpty
+            self.totalPriceLabel.alpha = isEmpty ? 0.0 : 1.0
+            self.orderButton.alpha = isEmpty ? 0.0 : 1.0
         }
+    }
+    
+    private func updateTotalPrice() {
+        var totalPrice = 0
+        for (food, quantity) in UserStorage.shared.cartItems {
+            let price: Int
+            switch food {
+            case .cereal:
+                price = 390
+            case .filadelphia:
+                price = 420
+            case .california:
+                price = 760
+            case .bananaWithBerries:
+                price = 350
+            case .vitaminDrink:
+                price = 280
+            case .none:
+                price = 0
+            case .egg:
+                price = 420
+            case .salad:
+                price = 620
+            }
+            totalPrice += price * quantity
+        }
+        totalPriceLabel.text = "Итого: \(totalPrice) ₽"
     }
 }
 
@@ -102,14 +152,25 @@ class CartViewController: UIViewController {
 extension CartViewController {
     private func setupLayout() {
         view.backgroundColor = AppColors.backgroundWhite
+        
+        // Сначала добавляем все view в иерархию
+        view.addSubview(topTitleLabel)
+        view.addSubview(separatorLine)
+        view.addSubview(tableView)
+        view.addSubview(emptyStateLabel)
+        view.addSubview(totalPriceLabel)
+        view.addSubview(orderButton)
+        
+        // Затем настраиваем констрейнты
         setupTopLabel()
         setupSeparatorLine()
         setupTableView()
         setupEmptyStateLabel()
+        setupTotalPriceLabel()
+        setupOrderButton()
     }
     
     private func setupTopLabel() {
-        view.addSubview(topTitleLabel)
         topTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -119,7 +180,6 @@ extension CartViewController {
     }
     
     private func setupSeparatorLine() {
-        view.addSubview(separatorLine)
         separatorLine.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -131,7 +191,6 @@ extension CartViewController {
     }
     
     private func setupTableView() {
-        view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -141,17 +200,36 @@ extension CartViewController {
             tableView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 25),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: totalPriceLabel.topAnchor, constant: -20)
         ])
     }
     
     private func setupEmptyStateLabel() {
-        view.addSubview(emptyStateLabel)
         emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func setupTotalPriceLabel() {
+        totalPriceLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            totalPriceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            totalPriceLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+        ])
+    }
+    
+    private func setupOrderButton() {
+        orderButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            orderButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            orderButton.centerYAnchor.constraint(equalTo: totalPriceLabel.centerYAnchor),
+            orderButton.widthAnchor.constraint(equalToConstant: 120),
+            orderButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }
