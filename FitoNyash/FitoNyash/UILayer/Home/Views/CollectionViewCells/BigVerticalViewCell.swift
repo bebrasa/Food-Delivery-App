@@ -73,7 +73,7 @@ class BigVerticalViewCell: UICollectionViewCell {
             height = 130
             massOfProduct.text = "250 г"
             caloryValue.text = "КБЖУ: 450/20/18/45"
-            productPrice.text = "370 ₽"
+            productPrice.text = "800 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([

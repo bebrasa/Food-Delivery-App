@@ -197,7 +197,7 @@ class CartTableViewCell: UITableViewCell {
         case .cereal:
             price = 390
         case .filadelphia:
-            price = 420
+            price = 800
         case .california:
             price = 760
         case .bananaWithBerries:
