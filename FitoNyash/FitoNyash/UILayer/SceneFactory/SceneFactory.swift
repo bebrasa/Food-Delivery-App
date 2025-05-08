@@ -35,7 +35,7 @@ struct SceneFactory {
         let secondVC = OnboardingPartViewController()
         secondVC.imageToShow = UIImage(resource: .secondOnboard)
         secondVC.titleText = "За 20 минут"
-        secondVC.descriptionText = "Мы не тянем время — привозим горячее"
+        secondVC.descriptionText = "Мы не тянем время — привозим горячее"
         
         let thirdVC = OnboardingPartViewController()
         thirdVC.imageToShow = UIImage(resource: .thirdOnboard)
