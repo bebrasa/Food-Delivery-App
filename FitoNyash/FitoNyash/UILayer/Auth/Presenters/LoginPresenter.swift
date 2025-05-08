@@ -9,7 +9,7 @@ import Foundation
 
 protocol LoginViewOutput: AnyObject {
     func loginStart(login: String, password: String)
-    func registaionStart()
+    func registaionStart(email: String, password: String, reEnterPassword: String)
     func goToSignIn()
     func goToSignUp()
     func goToForgotPassword()
@@ -46,23 +46,44 @@ extension LoginPresenter: LoginViewOutput {
         
     }
     
-    
     func loginStart(login: String, password: String) {
         viewInput?.startLoader()
-        DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+        
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
             DispatchQueue.main.async {
-                if login.lowercased() == "admin" && password.lowercased() == "12345" {
-                    self.viewInput?.stopLoader() 
+                if UserStorage.shared.loginUser(email: login, password: password) {
+                    self.viewInput?.stopLoader()
                     self.goToMainScreen()
                 } else {
-                    print("wrong pass or log")
                     self.viewInput?.stopLoader()
+                    // TODO: Показать ошибку авторизации
                 }
             }
         }
     }
-    func registaionStart() {
+    
+    func registaionStart(email: String, password: String, reEnterPassword: String) {
+        viewInput?.startLoader()
         
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.main.async {
+                if password != reEnterPassword {
+                    self.viewInput?.stopLoader()
+                    // TODO: Показать ошибку несовпадения паролей
+                    return
+                }
+                
+                if UserStorage.shared.registerUser(email: email, password: password) {
+                    // После успешной регистрации сразу логиним пользователя
+                    _ = UserStorage.shared.loginUser(email: email, password: password)
+                    self.viewInput?.stopLoader()
+                    self.goToMainScreen()
+                } else {
+                    self.viewInput?.stopLoader()
+                    // TODO: Показать ошибку регистрации
+                }
+            }
+        }
     }
      
     func goToSignIn() {
