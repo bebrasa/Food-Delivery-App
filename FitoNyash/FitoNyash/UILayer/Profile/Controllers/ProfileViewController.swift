@@ -54,11 +54,11 @@ class ProfileViewController: UIViewController {
         return stack
     }()
     
-    private lazy var myOrdersButton = UIButton()
-    private lazy var paymentMethodButton = UIButton()
-    private lazy var notificationsButton = UIButton()
-    private lazy var changePasswordButton = UIButton()
-    private lazy var contactUsButton = UIButton()
+    private lazy var myOrdersButton = ProfileMenuButtonView(title: "Мои заказы")
+    private lazy var paymentMethodButton = ProfileMenuButtonView(title: "Метод оплаты")
+    private lazy var notificationsButton = ProfileMenuButtonView(title: "Уведомления")
+    private lazy var changePasswordButton = ProfileMenuButtonView(title: "Сменить пароль")
+    private lazy var contactUsButton = ProfileMenuButtonView(title: "Связаться с нами")
     private lazy var logoutButton = FNButton()
     
     // MARK: - Init
@@ -144,67 +144,47 @@ class ProfileViewController: UIViewController {
     
     private func setupMyOrdersButton() {
         view.addSubview(myOrdersButton)
-        
         myOrdersButton.translatesAutoresizingMaskIntoConstraints = false
-        myOrdersButton.titleLabel?.font = .Roboto.regular.size(of: 16)
-        myOrdersButton.setTitle("Мои заказы", for: .normal)
-        myOrdersButton.setTitleColor(AppColors.labelBlack, for: .normal)
-        
         NSLayoutConstraint.activate([
             myOrdersButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -35),
             myOrdersButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            myOrdersButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30)
         ])
     }
     private func setupPaymentButton() {
         view.addSubview(paymentMethodButton)
-        
         paymentMethodButton.translatesAutoresizingMaskIntoConstraints = false
-        paymentMethodButton.titleLabel?.font = .Roboto.regular.size(of: 16)
-        paymentMethodButton.setTitle("Метод оплаты", for: .normal)
-        paymentMethodButton.setTitleColor(AppColors.labelBlack, for: .normal)
-        
         NSLayoutConstraint.activate([
             paymentMethodButton.topAnchor.constraint(equalTo: myOrdersButton.bottomAnchor, constant: 22),
             paymentMethodButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            paymentMethodButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30)
         ])
     }
     private func setupNotificButton() {
         view.addSubview(notificationsButton)
-        
         notificationsButton.translatesAutoresizingMaskIntoConstraints = false
-        notificationsButton.titleLabel?.font = .Roboto.regular.size(of: 16)
-        notificationsButton.setTitle("Уведомления", for: .normal)
-        notificationsButton.setTitleColor(AppColors.labelBlack, for: .normal)
-        
         NSLayoutConstraint.activate([
             notificationsButton.topAnchor.constraint(equalTo: paymentMethodButton.bottomAnchor, constant: 22),
             notificationsButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            notificationsButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30)
         ])
     }
     private func setupChangePassButton() {
         view.addSubview(changePasswordButton)
-        
         changePasswordButton.translatesAutoresizingMaskIntoConstraints = false
-        changePasswordButton.titleLabel?.font = .Roboto.regular.size(of: 16)
-        changePasswordButton.setTitle("Сменить пароль", for: .normal)
-        changePasswordButton.setTitleColor(AppColors.labelBlack, for: .normal)
-        
         NSLayoutConstraint.activate([
             changePasswordButton.topAnchor.constraint(equalTo: notificationsButton.bottomAnchor, constant: 22),
             changePasswordButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            changePasswordButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30)
         ])
     }
     private func setupContactUsButton() {
         view.addSubview(contactUsButton)
-        
         contactUsButton.translatesAutoresizingMaskIntoConstraints = false
-        contactUsButton.titleLabel?.font = .Roboto.regular.size(of: 16)
-        contactUsButton.setTitle("Связаться с нами", for: .normal)
-        contactUsButton.setTitleColor(AppColors.labelBlack, for: .normal)
-        
         NSLayoutConstraint.activate([
             contactUsButton.topAnchor.constraint(equalTo: changePasswordButton.bottomAnchor, constant: 22),
-            contactUsButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30)
+            contactUsButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 30),
+            contactUsButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30)
         ])
     }
     private func setupLogoutButton() {
