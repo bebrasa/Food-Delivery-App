@@ -8,7 +8,6 @@
 import UIKit
 
 protocol HomeViewControllerProtocol: AnyObject {
-    // Здесь можно добавить методы, которые презентер будет вызывать у контроллера
 }
 
 class HomeViewController: UIViewController, HomeViewControllerProtocol {

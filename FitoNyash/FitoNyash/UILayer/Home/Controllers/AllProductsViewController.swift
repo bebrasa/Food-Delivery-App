@@ -102,3 +102,4 @@ extension AllProductsViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: 130)
     }
 } 
+ 
