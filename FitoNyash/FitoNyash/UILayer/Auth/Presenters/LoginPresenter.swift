@@ -51,7 +51,7 @@ extension LoginPresenter: LoginViewOutput {
         viewInput?.startLoader()
         DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
             DispatchQueue.main.async {
-                if login.lowercased( ) == "admin" && password.lowercased() == "12345" {
+                if login.lowercased() == "admin" && password.lowercased() == "12345" {
                     self.viewInput?.stopLoader() 
                     self.goToMainScreen()
                 } else {

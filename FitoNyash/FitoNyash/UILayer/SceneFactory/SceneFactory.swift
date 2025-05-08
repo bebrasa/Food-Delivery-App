@@ -147,4 +147,11 @@ struct SceneFactory {
         let controller = CartViewController(presenter: presenter)
         return controller
     }
+    
+    //MARK: - Profile scene
+    static func makeProfileScene(coordinator: ProfileCoordinator) -> ProfileViewController {
+        let presenter = ProfilePresenter(coordinator: coordinator)
+        let controller = ProfileViewController(presenter: presenter)
+        return controller
+    }
 }

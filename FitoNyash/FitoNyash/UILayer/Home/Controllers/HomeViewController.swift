@@ -8,7 +8,6 @@
 import UIKit
 
 protocol HomeViewControllerProtocol: AnyObject {
-    // Здесь можно добавить методы, которые презентер будет вызывать у контроллера
 }
 
 class HomeViewController: UIViewController, HomeViewControllerProtocol {
@@ -312,7 +311,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             collectionView.reloadData()
         case 2:
-            print()
+            let viewController = AllProductsViewController()
+            navigationController?.pushViewController(viewController, animated: true)
         case 3:
             print()
         default:

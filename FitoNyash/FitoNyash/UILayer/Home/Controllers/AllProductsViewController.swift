@@ -81,15 +81,13 @@ extension AllProductsViewController: UICollectionViewDelegate, UICollectionViewD
         cell.configureVerticalCell(with: product)
         cell.updateHeartButton(isLiked: UserStorage.shared.isFavorite(product))
         
-        cell.onHeartButtonTapped = { [weak self] in
-            guard let self = self else { return }
+        cell.onHeartButtonTapped = { [weak cell] in
             UserStorage.shared.toggleFavorite(product)
-            cell.updateHeartButton(isLiked: UserStorage.shared.isFavorite(product))
+            cell?.updateHeartButton(isLiked: UserStorage.shared.isFavorite(product))
             NotificationCenter.default.post(name: NSNotification.Name("FavoritesDidChange"), object: nil)
         }
         
-        cell.onAddToCartTapped = { [weak self] in
-            guard let self = self else { return }
+        cell.onAddToCartTapped = {
             UserStorage.shared.addToCart(product)
         }
         
@@ -104,3 +102,4 @@ extension AllProductsViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: 130)
     }
 } 
+ 
