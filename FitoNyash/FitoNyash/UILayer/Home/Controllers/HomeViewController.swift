@@ -312,7 +312,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             collectionView.reloadData()
         case 2:
-            print()
+            let viewController = AllProductsViewController()
+            navigationController?.pushViewController(viewController, animated: true)
         case 3:
             print()
         default:
