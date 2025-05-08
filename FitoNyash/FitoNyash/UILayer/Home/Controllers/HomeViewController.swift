@@ -7,7 +7,11 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+protocol HomeViewControllerProtocol: AnyObject {
+    // Здесь можно добавить методы, которые презентер будет вызывать у контроллера
+}
+
+class HomeViewController: UIViewController, HomeViewControllerProtocol {
     
     //MARK: - Properties
     let presenter: HomePresenterProtocol
@@ -193,6 +197,7 @@ extension HomeViewController {
     func configureVerticalTitle() {
         contentView.addSubview(verticalCollectionTitle)
         verticalCollectionTitle.translatesAutoresizingMaskIntoConstraints = false
+        verticalCollectionTitle.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             verticalCollectionTitle.topAnchor.constraint(equalTo: bigHCollection.bottomAnchor, constant: 20),
@@ -238,6 +243,11 @@ extension HomeViewController {
             searchField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
             searchField.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+
+    @objc private func viewAllTapped() {
+        let viewController = AllProductsViewController()
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

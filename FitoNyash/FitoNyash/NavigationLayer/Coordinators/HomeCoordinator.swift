@@ -18,16 +18,19 @@ class HomeCoordinator: Coordinator {
     override func finish() {
         print("AppCoordinator finished")
     }
-    
-    
-    
 }
 
 // MARK: - Navigation
 extension HomeCoordinator {
-    func showHomeScene(){
+    func showHomeScene() {
         guard let navigationController = navigationController else { return }
         let viewController = factory.makeHomeScene(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showAllProducts() {
+        guard let navigationController = navigationController else { return }
+        let viewController = AllProductsViewController()
         navigationController.pushViewController(viewController, animated: true)
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 protocol HomePresenterProtocol: AnyObject {
+    var coordinator: Coordinator? { get set }
     func getSelectedCategory() -> FoodCategories
     var categoryData: [FoodCategories] { get }
     var foodMenuData: [FoodMenu] { get }
@@ -18,13 +19,14 @@ protocol HomePresenterProtocol: AnyObject {
 
 class HomePresenter: HomePresenterProtocol {
     //MARK: - Properties
-    let coordinator: HomeCoordinator
+    private weak var view: HomeViewControllerProtocol?
+    weak var coordinator: Coordinator?
     var categoryData = [FoodCategories]()
     var foodMenuData = [FoodMenu]()
     var foodListData = [FoodList]()
     
     //MARK: - Inits
-    init(coordinator: HomeCoordinator) {
+    init(coordinator: Coordinator?) {
         self.coordinator = coordinator
         getCategoryData()
         getFoodMenuData()

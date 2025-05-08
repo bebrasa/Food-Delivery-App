@@ -11,7 +11,7 @@ enum FoodList: String, Codable, Equatable {
     case salad = "Салат-мусс с тыквой"
     case filadelphia = "Ролл от шефа"
     case california = "Ролл от шефа №2"
-    case bananaWithBerries = "Банан и ягода"
-    case vitaminDrink = "Витаминный напиток"
+    case bananaWithBerries = "Ягодный десерт"
+    case vitaminDrink = "Курица в лепёшке"
     case none = ""
 }

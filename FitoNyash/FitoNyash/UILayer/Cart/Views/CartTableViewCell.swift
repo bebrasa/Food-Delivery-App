@@ -196,24 +196,38 @@ class CartTableViewCell: UITableViewCell {
         switch food {
         case .cereal:
             price = 390
+            productImageView.image = UIImage(resource: .cereal)
+            productImageView.layer.cornerRadius = 20
         case .filadelphia:
             price = 800
+            productImageView.image = UIImage(resource: .philadelphia)
+            productImageView.layer.cornerRadius = 20
         case .california:
             price = 760
+            productImageView.image = UIImage(resource: .california)
+            productImageView.layer.cornerRadius = 20
         case .bananaWithBerries:
             price = 350
+            productImageView.image = UIImage(resource: .bananaBerry)
+            productImageView.layer.cornerRadius = 20
         case .vitaminDrink:
             price = 280
+            productImageView.image = UIImage(resource: .chickenRoll)
+            productImageView.layer.cornerRadius = 20
         case .none:
             price = 0
         case .egg:
             price = 420
+            productImageView.image = UIImage(resource: .egg)
+            productImageView.layer.cornerRadius = 20
         case .salad:
             price = 620
+            productImageView.image = UIImage(resource: .saladPumkin)
+            productImageView.layer.cornerRadius = 20
         }
         priceLabel.text = "\(price) ₽"
         
         // TODO: Add image configuration
-        productImageView.image = UIImage(resource: .cereal)
+
     }
 } 

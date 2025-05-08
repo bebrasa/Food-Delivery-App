@@ -53,7 +53,7 @@ class BigVerticalViewCell: UICollectionViewCell {
                 imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor)
             ])
         case .egg:
-            image = UIImage(resource: .cereal)
+            image = UIImage(resource: .egg)
             imageView.image = image
             width = 130
             height = 130
@@ -67,7 +67,7 @@ class BigVerticalViewCell: UICollectionViewCell {
                 imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor)
             ])
         case .filadelphia:
-            image = UIImage(resource: .cereal)
+            image = UIImage(resource: .philadelphia)
             imageView.image = image
             width = 130
             height = 130
@@ -81,7 +81,7 @@ class BigVerticalViewCell: UICollectionViewCell {
                 imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor)
             ])
         case .california:
-            image = UIImage(resource: .cereal)
+            image = UIImage(resource: .california)
             imageView.image = image
             width = 130
             height = 130
@@ -95,7 +95,7 @@ class BigVerticalViewCell: UICollectionViewCell {
                 imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor)
             ])
         case .salad:
-            image = UIImage(resource: .cereal)
+            image = UIImage(resource: .saladPumkin)
             imageView.image = image
             width = 130
             height = 130
@@ -109,11 +109,11 @@ class BigVerticalViewCell: UICollectionViewCell {
                 imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor)
             ])
         case .bananaWithBerries:
-            image = UIImage(resource: .cereal)
+            image = UIImage(resource: .bananaBerry)
             imageView.image = image
             width = 130
             height = 130
-            massOfProduct.text = "280 мл"
+            massOfProduct.text = "280 г"
             caloryValue.text = "КБЖУ: 180/3/2/40"
             productPrice.text = "350 ₽"
             
@@ -123,12 +123,12 @@ class BigVerticalViewCell: UICollectionViewCell {
                 imageView.centerYAnchor.constraint(equalTo: topView.centerYAnchor)
             ])
         case .vitaminDrink:
-            image = UIImage(resource: .cereal)
+            image = UIImage(resource: .chickenRoll)
             imageView.image = image
             width = 130
             height = 130
-            massOfProduct.text = "330 мл"
-            caloryValue.text = "КБЖУ: 65/0/0/16"
+            massOfProduct.text = "250 гр"
+            caloryValue.text = "КБЖУ: 150/4/3/45"
             productPrice.text = "280 ₽"
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
