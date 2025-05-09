@@ -291,7 +291,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             
             cell?.onAddToCartTapped = { [weak self] in
-                guard let self = self else { return }
+                guard self != nil else { return }
                 UserStorage.shared.addToCart(foodList)
             }
             

@@ -300,7 +300,7 @@ extension CartViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.configure(with: food, quantity: quantity)
         
         cell?.onQuantityChanged = { [weak self] newQuantity in
-            guard let self = self else { return }
+            guard self != nil else { return }
             if newQuantity > 0 {
                 UserStorage.shared.cartItems[food] = newQuantity
                 NotificationCenter.default.post(name: NSNotification.Name("CartDidChange"), object: nil)
