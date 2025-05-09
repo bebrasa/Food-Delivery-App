@@ -317,10 +317,13 @@ private extension LoginViewController {
         case .base:
             viewOutput.goToSignIn()
         case .login:
-            print(#function)
             viewOutput.loginStart(login: signInUsername.text ?? "", password: signInPassword.text ?? "")
         case .signUp:
-            return
+            viewOutput.registaionStart(
+                email: signUpUsername.text ?? "",
+                password: signUpPassword.text ?? "",
+                reEnterPassword: signUpReEnterPassword.text ?? ""
+            )
         }
     }
     

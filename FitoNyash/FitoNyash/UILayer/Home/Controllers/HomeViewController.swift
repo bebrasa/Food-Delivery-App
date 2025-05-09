@@ -199,7 +199,7 @@ extension HomeViewController {
         verticalCollectionTitle.viewAll.addTarget(self, action: #selector(viewAllTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            verticalCollectionTitle.topAnchor.constraint(equalTo: bigHCollection.bottomAnchor, constant: 20),
+            verticalCollectionTitle.topAnchor.constraint(equalTo: bigHCollection.bottomAnchor, constant: 30),
             verticalCollectionTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
             verticalCollectionTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
             verticalCollectionTitle.heightAnchor.constraint(equalToConstant: 22)
@@ -223,7 +223,7 @@ extension HomeViewController {
         ])
     }
     func calculateContentSize() {
-        var totalHeight: CGFloat = 300 + 50 + 22 + 60 +  50 + 20 + 45 + smallHCollection.bounds.height + bigHCollection.bounds.height
+        var totalHeight: CGFloat = 300 + 50 + 22 + 60 +  50 + 30 + 45 + smallHCollection.bounds.height + bigHCollection.bounds.height
         for index in 0..<bigVerticalCollection.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: index, section: 0)
             let cellHeight = collectionView(bigVerticalCollection, layout: bigVerticalCollection.collectionViewLayout, sizeForItemAt: indexPath).height

@@ -7,12 +7,18 @@
 
 import Foundation
 
-protocol ProfilePresenterProtocol: AnyObject {
+protocol ProfilePresenterProtocol {
     var coordinator: Coordinator? { get set }
     func getUserInfo() -> String
 }
 
-final class ProfilePresenter: ProfilePresenterProtocol {
+class ProfilePresenter: ProfilePresenterProtocol {
+    func getUserInfo() -> String {
+        if let currentUser = UserStorage.shared.currentUser {
+            return currentUser.email
+        }
+        return "Гость"
+    }
     
     // MARK: - Properties
     weak var coordinator: Coordinator?
@@ -20,15 +26,5 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     // MARK: - Init
     init(coordinator: Coordinator?) {
         self.coordinator = coordinator
-    }
-    
-    // MARK: - Methods
-    func getUserInfo() -> String {
-        if let username = UserDefaults.standard.string(forKey: "username") {
-            return username
-        } else if let email = UserDefaults.standard.string(forKey: "email") {
-            return email
-        }
-        return "Гость"
     }
 }
