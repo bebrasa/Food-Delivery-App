@@ -64,6 +64,9 @@ class CartViewController: UIViewController {
         return button
     }()
     
+    private lazy var loader = UIActivityIndicatorView(style: .large)
+    private lazy var loaderContainer = UIView()
+    
     // MARK: - Inits
     init(presenter: CartPresenterProtocol) {
         self.presenter = presenter
@@ -146,6 +149,63 @@ class CartViewController: UIViewController {
         }
         totalPriceLabel.text = "Итого: \(totalPrice) ₽"
     }
+    
+    private func setupOrderButton() {
+        view.addSubview(orderButton)
+        orderButton.translatesAutoresizingMaskIntoConstraints = false
+        orderButton.addTarget(self, action: #selector(onOrderButtonTapped), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            orderButton.centerYAnchor.constraint(equalTo: totalPriceLabel.centerYAnchor, constant: 0),
+            orderButton.leftAnchor.constraint(equalTo: view.rightAnchor, constant: -150),
+            orderButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -30),
+            orderButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    private func setupLoaderView() {
+        guard let window = UIApplication.shared.windows.first else { return }
+        
+        window.addSubview(loaderContainer)
+        loaderContainer.translatesAutoresizingMaskIntoConstraints = false
+        loaderContainer.backgroundColor = AppColors.labelBlack.withAlphaComponent(0.2)
+        loaderContainer.isHidden = true
+        
+        NSLayoutConstraint.activate([
+            loaderContainer.topAnchor.constraint(equalTo: window.topAnchor),
+            loaderContainer.leadingAnchor.constraint(equalTo: window.leadingAnchor),
+            loaderContainer.trailingAnchor.constraint(equalTo: window.trailingAnchor),
+            loaderContainer.bottomAnchor.constraint(equalTo: window.bottomAnchor)
+        ])
+        
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        loaderContainer.addSubview(loader)
+        
+        NSLayoutConstraint.activate([
+            loader.centerXAnchor.constraint(equalTo: loaderContainer.centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: loaderContainer.centerYAnchor)
+        ])
+    }
+    
+    private func startLoader() {
+        loaderContainer.isHidden = false
+        loader.startAnimating()
+    }
+    
+    private func stopLoader() {
+        loaderContainer.isHidden = true
+        loader.stopAnimating()
+    }
+    
+    @objc private func onOrderButtonTapped() {
+        startLoader()
+        // Имитируем загрузку
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.stopLoader()
+            let orderVC = OrderViewController()
+            self?.navigationController?.pushViewController(orderVC, animated: true)
+        }
+    }
 }
 
 // MARK: - Layout
@@ -160,6 +220,7 @@ extension CartViewController {
         view.addSubview(emptyStateLabel)
         view.addSubview(totalPriceLabel)
         view.addSubview(orderButton)
+        view.addSubview(loaderContainer)
         
         // Затем настраиваем констрейнты
         setupTopLabel()
@@ -168,6 +229,7 @@ extension CartViewController {
         setupEmptyStateLabel()
         setupTotalPriceLabel()
         setupOrderButton()
+        setupLoaderView()
     }
     
     private func setupTopLabel() {
@@ -219,17 +281,6 @@ extension CartViewController {
         NSLayoutConstraint.activate([
             totalPriceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             totalPriceLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
-        ])
-    }
-    
-    private func setupOrderButton() {
-        orderButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            orderButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            orderButton.centerYAnchor.constraint(equalTo: totalPriceLabel.centerYAnchor),
-            orderButton.widthAnchor.constraint(equalToConstant: 120),
-            orderButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }

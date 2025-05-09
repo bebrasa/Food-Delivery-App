@@ -52,7 +52,7 @@ extension LoginPresenter: LoginViewOutput {
         DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
             DispatchQueue.main.async {
                 if UserStorage.shared.loginUser(email: login, password: password) {
-                    self.viewInput?.stopLoader()
+                    self.viewInput?.stopLoader() 
                     self.goToMainScreen()
                 } else {
                     self.viewInput?.stopLoader()
