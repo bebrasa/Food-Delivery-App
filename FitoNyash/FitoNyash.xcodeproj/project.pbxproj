@@ -6,7 +6,36 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4D7A03E52DCE934800F27F5B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5454A42DCE87FF002D6529 /* XCTest.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4D5454BA2DCE8989002D6529 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D5DA6D22DB9335D00DFDE1A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D5DA6D92DB9335D00DFDE1A;
+			remoteInfo = FitoNyash;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4D5454A72DCE87FF002D6529 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4D5454A42DCE87FF002D6529 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		4D5454B62DCE8989002D6529 /* FitoNyashTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitoNyashTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5DA6DA2DB9335D00DFDE1A /* FitoNyash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitoNyash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -21,6 +50,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4D5454B72DCE8989002D6529 /* FitoNyashTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FitoNyashTests;
+			sourceTree = "<group>";
+		};
 		4D5DA6DC2DB9335D00DFDE1A /* FitoNyash */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -32,6 +66,14 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D5454B32DCE8989002D6529 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D7A03E52DCE934800F27F5B /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D5DA6D72DB9335D00DFDE1A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -42,10 +84,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D5454A32DCE87FF002D6529 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D5454A42DCE87FF002D6529 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4D5DA6D12DB9335D00DFDE1A = {
 			isa = PBXGroup;
 			children = (
 				4D5DA6DC2DB9335D00DFDE1A /* FitoNyash */,
+				4D5454B72DCE8989002D6529 /* FitoNyashTests */,
+				4D5454A32DCE87FF002D6529 /* Frameworks */,
 				4D5DA6DB2DB9335D00DFDE1A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				4D5DA6DA2DB9335D00DFDE1A /* FitoNyash.app */,
+				4D5454B62DCE8989002D6529 /* FitoNyashTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,6 +114,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4D5454B52DCE8989002D6529 /* FitoNyashTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D5454BC2DCE8989002D6529 /* Build configuration list for PBXNativeTarget "FitoNyashTests" */;
+			buildPhases = (
+				4D5454B22DCE8989002D6529 /* Sources */,
+				4D5454B32DCE8989002D6529 /* Frameworks */,
+				4D5454B42DCE8989002D6529 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D5454BB2DCE8989002D6529 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				4D5454B72DCE8989002D6529 /* FitoNyashTests */,
+			);
+			name = FitoNyashTests;
+			packageProductDependencies = (
+			);
+			productName = FitoNyashTests;
+			productReference = 4D5454B62DCE8989002D6529 /* FitoNyashTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4D5DA6D92DB9335D00DFDE1A /* FitoNyash */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D5DA6ED2DB9335F00DFDE1A /* Build configuration list for PBXNativeTarget "FitoNyash" */;
@@ -68,6 +144,7 @@
 				4D5DA6D62DB9335D00DFDE1A /* Sources */,
 				4D5DA6D72DB9335D00DFDE1A /* Frameworks */,
 				4D5DA6D82DB9335D00DFDE1A /* Resources */,
+				4D5454A72DCE87FF002D6529 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -93,6 +170,11 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					4D5454B52DCE8989002D6529 = {
+						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1620;
+						TestTargetID = 4D5DA6D92DB9335D00DFDE1A;
+					};
 					4D5DA6D92DB9335D00DFDE1A = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -113,11 +195,19 @@
 			projectRoot = "";
 			targets = (
 				4D5DA6D92DB9335D00DFDE1A /* FitoNyash */,
+				4D5454B52DCE8989002D6529 /* FitoNyashTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4D5454B42DCE8989002D6529 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D5DA6D82DB9335D00DFDE1A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +218,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D5454B22DCE8989002D6529 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D5DA6D62DB9335D00DFDE1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,7 +234,54 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4D5454BB2DCE8989002D6529 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D5DA6D92DB9335D00DFDE1A /* FitoNyash */;
+			targetProxy = 4D5454BA2DCE8989002D6529 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4D5454BD2DCE8989002D6529 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2427KBQQ8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nikitakooch.FitoNyashTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FitoNyash.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FitoNyash";
+			};
+			name = Debug;
+		};
+		4D5454BE2DCE8989002D6529 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2427KBQQ8B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nikitakooch.FitoNyashTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FitoNyash.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FitoNyash";
+			};
+			name = Release;
+		};
 		4D5DA6EE2DB9335F00DFDE1A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -148,10 +292,10 @@
 				DEVELOPMENT_TEAM = 2427KBQQ8B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FitoNyash/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Фитоняш";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -175,10 +319,10 @@
 				DEVELOPMENT_TEAM = 2427KBQQ8B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FitoNyash/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Фитоняш";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -314,6 +458,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D5454BC2DCE8989002D6529 /* Build configuration list for PBXNativeTarget "FitoNyashTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D5454BD2DCE8989002D6529 /* Debug */,
+				4D5454BE2DCE8989002D6529 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4D5DA6D52DB9335D00DFDE1A /* Build configuration list for PBXProject "FitoNyash" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
