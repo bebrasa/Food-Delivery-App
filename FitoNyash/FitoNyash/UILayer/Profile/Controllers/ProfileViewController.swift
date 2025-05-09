@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var userInfoLabel: UILabel = {
+    internal lazy var userInfoLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .Roboto.medium.size(of: 18)
@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    private let topTitleLabel: UILabel = {
+    internal let topTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Профиль"
         label.textColor = AppColors.labelBlack
@@ -54,12 +54,12 @@ class ProfileViewController: UIViewController {
         return stack
     }()
     
-    private lazy var myOrdersButton = ProfileMenuButtonView(title: "Мои заказы")
-    private lazy var paymentMethodButton = ProfileMenuButtonView(title: "Метод оплаты")
-    private lazy var notificationsButton = ProfileMenuButtonView(title: "Уведомления")
-    private lazy var changePasswordButton = ProfileMenuButtonView(title: "Сменить пароль")
-    private lazy var contactUsButton = ProfileMenuButtonView(title: "Связаться с нами")
-    private lazy var logoutButton = FNButton()
+    internal lazy var myOrdersButton = ProfileMenuButtonView(title: "Мои заказы")
+    internal lazy var paymentMethodButton = ProfileMenuButtonView(title: "Метод оплаты")
+    internal lazy var notificationsButton = ProfileMenuButtonView(title: "Уведомления")
+    internal lazy var changePasswordButton = ProfileMenuButtonView(title: "Сменить пароль")
+    internal lazy var contactUsButton = ProfileMenuButtonView(title: "Связаться с нами")
+    internal lazy var logoutButton = FNButton()
     
     // MARK: - Init
     init(presenter: ProfilePresenterProtocol) {

@@ -27,11 +27,11 @@ class LoginViewController: UIViewController {
     
     // MARK: - Views
     private lazy var titleLable = UILabel()
-    private lazy var signInUsername = FNTextField()
-    private lazy var signInPassword = FNTextField()
-    private lazy var signUpUsername = FNTextField()
-    private lazy var signUpPassword = FNTextField()
-    private lazy var signUpReEnterPassword = FNTextField()
+    internal lazy var signInUsername = FNTextField()
+    internal lazy var signInPassword = FNTextField()
+    internal lazy var signUpUsername = FNTextField()
+    internal lazy var signUpPassword = FNTextField()
+    internal lazy var signUpReEnterPassword = FNTextField()
     private lazy var forgotPasswordLabel = UILabel()
     private lazy var logoImage = UIImageView()
     private lazy var signInButton = FNButton()
@@ -311,7 +311,7 @@ private extension LoginViewController {
     }
 }
 //MARK: - Private methods
-private extension LoginViewController {
+internal extension LoginViewController {
     func onSignInTapped() {
         switch state {
         case .base:

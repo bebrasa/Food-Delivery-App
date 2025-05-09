@@ -244,7 +244,7 @@ extension HomeViewController {
         ])
     }
 
-    @objc private func viewAllTapped() {
+    @objc func viewAllTapped() {
         let viewController = AllProductsViewController()
         navigationController?.pushViewController(viewController, animated: true)
     }

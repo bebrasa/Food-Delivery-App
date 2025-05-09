@@ -13,7 +13,7 @@ class CartViewController: UIViewController {
     let presenter: CartPresenterProtocol
     
     // MARK: - Views
-    private let topTitleLabel: UILabel = {
+    let topTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Корзина"
         label.textColor = AppColors.labelBlack
@@ -28,7 +28,7 @@ class CartViewController: UIViewController {
         return view
     }()
     
-    private let emptyStateLabel: UILabel = {
+    let emptyStateLabel: UILabel = {
         let label = UILabel()
         label.text = "Здесь пока пусто..."
         label.textColor = AppColors.categoryGray
@@ -46,7 +46,7 @@ class CartViewController: UIViewController {
         return table
     }()
     
-    private let totalPriceLabel: UILabel = {
+    let totalPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "Итого: 0 ₽"
         label.textColor = AppColors.labelBlack
@@ -54,7 +54,7 @@ class CartViewController: UIViewController {
         return label
     }()
     
-    private let orderButton: UIButton = {
+    let orderButton: UIButton = {
         let button = UIButton()
         button.setTitle("Заказать", for: .normal)
         button.setTitleColor(.white, for: .normal)

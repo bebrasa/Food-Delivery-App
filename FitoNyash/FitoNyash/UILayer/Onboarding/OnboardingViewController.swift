@@ -16,7 +16,7 @@ class OnboardingViewController: UIViewController {
     
     // MARK: - Views
     private var pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-    private let pageControl: UIPageControl = {
+    internal let pageControl: UIPageControl = {
         let control = UIPageControl()
         control.currentPageIndicatorTintColor = .black
         control.pageIndicatorTintColor = .lightGray
