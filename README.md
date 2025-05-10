@@ -9,19 +9,19 @@ FitoNyash — это iOS-приложение, которое позволяет
 ## 📸 Демонстрация
 
 ### 🎥 Демо-видео
-<p align="center">
+<p align="left">
   <img src="Resources/workGIF.gif" alt="Демонстрация" width="300"/>
 </p>
 
 ### 📱 Скриншоты
 
 #### Загрузочный экран
-<p align="center">
+<p align="left">
   <img src="Resources/launch.png" alt="LaunchScreen" width="200"/>
 </p>
 
 #### Онбординг
-<p align="center">
+<p align="left">
   <img src="Resources/onboardnig1.png" width="200"/>
   <img src="Resources/onboarding2.png" width="200"/>
   <img src="Resources/onboarding3.png" width="200"/>
@@ -29,7 +29,7 @@ FitoNyash — это iOS-приложение, которое позволяет
 </p>
 
 #### Аутентификация
-<p align="center">
+<p align="left">
   <img src="Resources/auth.png" width="200"/>
   <img src="Resources/signIn1.png" width="200"/>
   <img src="Resources/signIn2.png" width="200"/>
@@ -38,13 +38,13 @@ FitoNyash — это iOS-приложение, которое позволяет
 </p>
 
 #### Главный экран
-<p align="center">
+<p align="left">
   <img src="Resources/home1.png" width="200"/>
   <img src="Resources/home2.png" width="200"/>
 </p>
 
 #### Корзина
-<p align="center">
+<p align="left">
   <img src="Resources/cartEmpty.png" width="200"/>
   <img src="Resources/cartNotEmpty.png" width="200"/>
   <img src="Resources/correct.png" width="200"/>
@@ -52,12 +52,12 @@ FitoNyash — это iOS-приложение, которое позволяет
 </p>
 
 #### Избранное
-<p align="center">
+<p align="left">
   <img src="Resources/favorite.png" width="200"/>
 </p>
 
 #### Профиль
-<p align="center">
+<p align="left">
   <img src="Resources/profile.png" width="200"/>
 </p>
 
