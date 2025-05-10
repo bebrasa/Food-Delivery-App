@@ -10,19 +10,19 @@ FitoNyash — это iOS-приложение, которое позволяет
 
 ### 🎥 Демо-видео
 <p align="center">
-  <img src="Resources/workGIF.gif" alt="Демонстрация" width="600"/>
+  <img src="Resources/workGIF.gif" alt="Демонстрация" width="300"/>
 </p>
 
 ### 📱 Скриншоты
 
 #### Загрузочный экран
 <p align="center">
-  <img src="Resources/launch.png" alt="LaunchScreen" width="300"/>
+  <img src="Resources/launch.png" alt="LaunchScreen" width="200"/>
 </p>
 
 #### Онбординг
 <p align="center">
-  <img src="Resources/onboarding1.png" width="200"/>
+  <img src="Resources/onboardnig1.png" width="200"/>
   <img src="Resources/onboarding2.png" width="200"/>
   <img src="Resources/onboarding3.png" width="200"/>
   <img src="Resources/onboarding4.png" width="200"/>
