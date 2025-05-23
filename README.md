@@ -69,6 +69,7 @@ FitoNyash — это iOS-приложение, которое позволяет
 - Swift 5.0
 - UIKit
 - Foundation
+- XCTest
 
 ### Архитектурные паттерны
 - MVP (Model-View-Presenter)
