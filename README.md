@@ -133,7 +133,7 @@ FitoNyash — это iOS-приложение, которое позволяет
 
 1. Клонируйте репозиторий:
 ```bash
-https://github.com/bebrasa/Food-Delivery-App.git
+git clone https://github.com/bebrasa/Food-Delivery-App.git
 ```
 
 2. Откройте проект в Xcode:
