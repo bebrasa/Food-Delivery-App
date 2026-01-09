@@ -16,10 +16,18 @@ protocol LoginViewOutput: AnyObject {
     func back()
 }
 
+protocol LoginViewInput: AnyObject {
+    func startLoader()
+    func stopLoader()
+    func showError(_ message: String)
+}
+
 class LoginPresenter {
     
     private var coordinator: LoginCoordinator?
     weak var viewInput: LoginViewInput?
+    
+    private let authService = AuthService.shared
     
     init(coordinator: LoginCoordinator? = nil, viewInput: LoginViewInput? = nil) {
         self.coordinator = coordinator
@@ -49,15 +57,17 @@ extension LoginPresenter: LoginViewOutput {
     func loginStart(login: String, password: String) {
         viewInput?.startLoader()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
-            DispatchQueue.main.async {
-                if UserStorage.shared.loginUser(email: login, password: password) {
-                    self.viewInput?.stopLoader() 
-                    self.goToMainScreen()
-                } else {
-                    self.viewInput?.stopLoader()
-                    // TODO: Показать ошибку авторизации
-                }
+        Task { @MainActor in
+            do {
+                _ = try await authService.login(email: login, password: password)
+                viewInput?.stopLoader()
+                goToMainScreen()
+            } catch let error as NetworkError {
+                viewInput?.stopLoader()
+                viewInput?.showError(error.localizedDescription)
+            } catch {
+                viewInput?.stopLoader()
+                viewInput?.showError("Неверный email или пароль")
             }
         }
     }
@@ -65,23 +75,36 @@ extension LoginPresenter: LoginViewOutput {
     func registaionStart(email: String, password: String, reEnterPassword: String) {
         viewInput?.startLoader()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
-            DispatchQueue.main.async {
-                if password != reEnterPassword {
-                    self.viewInput?.stopLoader()
-                    // TODO: Показать ошибку несовпадения паролей
-                    return
-                }
-                
-                if UserStorage.shared.registerUser(email: email, password: password) {
-                    // После успешной регистрации сразу логиним пользователя
-                    _ = UserStorage.shared.loginUser(email: email, password: password)
-                    self.viewInput?.stopLoader()
-                    self.goToMainScreen()
-                } else {
-                    self.viewInput?.stopLoader()
-                    // TODO: Показать ошибку регистрации
-                }
+        // Проверка совпадения паролей
+        guard password == reEnterPassword else {
+            viewInput?.stopLoader()
+            viewInput?.showError("Пароли не совпадают")
+            return
+        }
+        
+        // Проверка минимальной длины пароля
+        guard password.count >= 5 else {
+            viewInput?.stopLoader()
+            viewInput?.showError("Пароль должен содержать минимум 5 символов")
+            return
+        }
+        
+        Task { @MainActor in
+            do {
+                _ = try await authService.register(
+                    email: email,
+                    password: password,
+                    fullName: nil,
+                    phoneNumber: nil
+                )
+                viewInput?.stopLoader()
+                goToMainScreen()
+            } catch let error as NetworkError {
+                viewInput?.stopLoader()
+                viewInput?.showError(error.localizedDescription)
+            } catch {
+                viewInput?.stopLoader()
+                viewInput?.showError("Ошибка регистрации. Попробуйте позже.")
             }
         }
     }
@@ -90,5 +113,3 @@ extension LoginPresenter: LoginViewOutput {
         coordinator?.showSignInFlow()
     }
 }
-
-        

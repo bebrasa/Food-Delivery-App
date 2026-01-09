@@ -12,184 +12,105 @@ class UserStorage {
     static let shared = UserStorage()
     
     // MARK: - Init
-    private init() {
-        setupDefaultUser()
-    }
+    private init() {}
     
-    private func setupDefaultUser() {
-        // Проверяем, есть ли уже пользователи
-        if users.isEmpty {
-            // Добавляем админа только если база пустая
-            let adminUser = User(email: "admin", password: "12345")
-            users = [adminUser]
-        }
-    }
-    
+    // MARK: - Onboarding
     var passedOnboarding: Bool {
         get { UserDefaults.standard.bool(forKey: "passedOnboarding") }
         set { UserDefaults.standard.set(newValue, forKey: "passedOnboarding") }
     }
     
-    // MARK: - Favorites
-    private let favoritesKey = "favoriteFoodItems"
+    // MARK: - Authentication (используем TokenStorage)
+    var isLoggedIn: Bool {
+        return TokenStorage.shared.isLoggedIn
+    }
     
-    var favoriteFoodItems: Set<FoodList> {
+    var currentUser: UserDTO? {
+        return TokenStorage.shared.currentUser
+    }
+    
+    // MARK: - Local Cache for Favorites (для офлайн доступа)
+    private let favoritesKey = "favoriteFoodItemsCache"
+    
+    var cachedFavorites: [FoodItemDTO] {
         get {
             guard let data = UserDefaults.standard.data(forKey: favoritesKey),
-                  let decodedItems = try? JSONDecoder().decode(Set<FoodList>.self, from: data) else {
+                  let items = try? JSONDecoder().decode([FoodItemDTO].self, from: data) else {
                 return []
             }
-            return decodedItems
+            return items
         }
         set {
-            if let encoded = try? JSONEncoder().encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: favoritesKey)
+            if let data = try? JSONEncoder().encode(newValue) {
+                UserDefaults.standard.set(data, forKey: favoritesKey)
             }
         }
     }
     
-    // MARK: - Cart
-    private let cartKey = "cartItems"
-    private let cartOrderKey = "cartOrder"
+    func updateFavoritesCache(_ favorites: [FoodItemDTO]) {
+        cachedFavorites = favorites
+    }
     
-    var cartOrder: [FoodList] {
+    func isFavoriteInCache(_ itemId: Int) -> Bool {
+        return cachedFavorites.contains { $0.id == itemId }
+    }
+    
+    // MARK: - Local Cache for Cart (для офлайн доступа)
+    private let cartCacheKey = "cartItemsCache"
+    
+    var cachedCart: CartDTO? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: cartOrderKey),
-                  let decodedItems = try? JSONDecoder().decode([FoodList].self, from: data) else {
-                return []
-            }
-            return decodedItems
-        }
-        set {
-            if let encoded = try? JSONEncoder().encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: cartOrderKey)
-            }
-        }
-    }
-    
-    var cartItems: [FoodList: Int] {
-        get {
-            guard let data = UserDefaults.standard.data(forKey: cartKey),
-                  let decodedItems = try? JSONDecoder().decode([FoodList: Int].self, from: data) else {
-                return [:]
-            }
-            return decodedItems
-        }
-        set {
-            if let encoded = try? JSONEncoder().encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: cartKey)
-            }
-        }
-    }
-    
-    func addToCart(_ item: FoodList) {
-        var cart = cartItems
-        cart[item, default: 0] += 1
-        cartItems = cart
-        
-        if !cartOrder.contains(item) {
-            cartOrder.append(item)
-        }
-        
-        NotificationCenter.default.post(name: NSNotification.Name("CartDidChange"), object: nil)
-    }
-    
-    func removeFromCart(_ item: FoodList) {
-        var cart = cartItems
-        if let count = cart[item] {
-            if count > 1 {
-                cart[item] = count - 1
-            } else {
-                cart.removeValue(forKey: item)
-                cartOrder.removeAll { $0 == item }
-            }
-            cartItems = cart
-            NotificationCenter.default.post(name: NSNotification.Name("CartDidChange"), object: nil)
-        }
-    }
-    
-    func clearCart() {
-        cartItems = [:]
-        cartOrder = []
-        NotificationCenter.default.post(name: NSNotification.Name("CartDidChange"), object: nil)
-    }
-    
-    func toggleFavorite(_ item: FoodList) {
-        var favorites = favoriteFoodItems
-        if favorites.contains(item) {
-            favorites.remove(item)
-        } else {
-            favorites.insert(item)
-        }
-        favoriteFoodItems = favorites
-    }
-    
-    func isFavorite(_ item: FoodList) -> Bool {
-        return favoriteFoodItems.contains(item)
-    }
-    
-    // MARK: - User Management
-    private let usersKey = "users"
-    private let currentUserKey = "currentUser"
-    
-    struct User: Codable {
-        let email: String
-        let password: String
-    }
-    
-    var currentUser: User? {
-        get {
-            guard let data = UserDefaults.standard.data(forKey: currentUserKey),
-                  let user = try? JSONDecoder().decode(User.self, from: data) else {
+            guard let data = UserDefaults.standard.data(forKey: cartCacheKey),
+                  let cart = try? JSONDecoder().decode(CartDTO.self, from: data) else {
                 return nil
             }
-            return user
+            return cart
         }
         set {
-            if let encoded = try? JSONEncoder().encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: currentUserKey)
+            if let cart = newValue, let data = try? JSONEncoder().encode(cart) {
+                UserDefaults.standard.set(data, forKey: cartCacheKey)
+            } else {
+                UserDefaults.standard.removeObject(forKey: cartCacheKey)
             }
         }
     }
     
-    private var users: [User] {
-        get {
-            guard let data = UserDefaults.standard.data(forKey: usersKey),
-                  let users = try? JSONDecoder().decode([User].self, from: data) else {
-                return []
-            }
-            return users
-        }
-        set {
-            if let encoded = try? JSONEncoder().encode(newValue) {
-                UserDefaults.standard.set(encoded, forKey: usersKey)
-            }
-        }
+    func updateCartCache(_ cart: CartDTO) {
+        cachedCart = cart
     }
     
-    func registerUser(email: String, password: String) -> Bool {
-        // Проверяем, не существует ли уже пользователь с таким email
-        if users.contains(where: { $0.email == email }) {
-            return false
-        }
-        
-        let newUser = User(email: email, password: password)
-        var currentUsers = users
-        currentUsers.append(newUser)
-        users = currentUsers
-        return true
-    }
-    
-    func loginUser(email: String, password: String) -> Bool {
-        guard let user = users.first(where: { $0.email == email && $0.password == password }) else {
-            return false
-        }
-        
-        currentUser = user
-        return true
-    }
-    
+    // MARK: - Logout
     func logout() {
-        currentUser = nil
+        TokenStorage.shared.clearTokens()
+        cachedFavorites = []
+        cachedCart = nil
+    }
+    
+    // MARK: - Legacy Support (для совместимости со старым кодом)
+    // Эти методы можно использовать во время миграции
+    
+    @available(*, deprecated, message: "Используйте FavoriteService.shared.toggleFavorite()")
+    func toggleFavorite(_ item: FoodList) {
+        // Оставляем для совместимости
+    }
+    
+    @available(*, deprecated, message: "Используйте FavoriteService.shared.isFavorite()")
+    func isFavorite(_ item: FoodList) -> Bool {
+        return false
+    }
+    
+    @available(*, deprecated, message: "Используйте CartService.shared.addToCart()")
+    func addToCart(_ item: FoodList) {
+        // Оставляем для совместимости
+    }
+    
+    @available(*, deprecated, message: "Используйте CartService.shared.removeFromCart()")
+    func removeFromCart(_ item: FoodList) {
+        // Оставляем для совместимости
+    }
+    
+    @available(*, deprecated, message: "Используйте CartService.shared.clearCart()")
+    func clearCart() {
+        // Оставляем для совместимости
     }
 }

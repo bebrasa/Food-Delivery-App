@@ -1,0 +1,56 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: fitonyash-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-fitonyash}
+      POSTGRES_USER: ${DB_USERNAME:-fitonyash}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-fitonyash123}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-fitonyash} -d ${DB_NAME:-fitonyash}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fitonyash-network
+
+  # Spring Boot Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fitonyash-app
+    restart: unless-stopped
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-fitonyash}
+      DB_USERNAME: ${DB_USERNAME:-fitonyash}
+      DB_PASSWORD: ${DB_PASSWORD:-fitonyash123}
+      JWT_SECRET: ${JWT_SECRET:-Zml0b255YXNoLXN1cGVyLXNlY3JldC1rZXktZm9yLWp3dC10b2tlbi1nZW5lcmF0aW9uLW1pbmltdW0tMjU2LWJpdHM=}
+      JWT_ACCESS_EXPIRATION: ${JWT_ACCESS_EXPIRATION:-900000}
+      JWT_REFRESH_EXPIRATION: ${JWT_REFRESH_EXPIRATION:-604800000}
+      SERVER_PORT: 8080
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - fitonyash-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  fitonyash-network:
+    driver: bridge
+
